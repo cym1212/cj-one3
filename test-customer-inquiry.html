@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poj2 Customer Inquiry Test</title>
+
+    <!-- Tailwind CSS CDN (자동 로드되지만 백업용) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'accent': '#41c5af',
+                        'muted-foreground': '#6b7280',
+                        'border': '#e5e7eb',
+                        'muted': '#f3f4f6'
+                    },
+                    spacing: {
+                        '15': '3.75rem',
+                        '30': '7.5rem'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="./dist/customer/poj2-customer-inquiry.css">
+
+    <style>
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- 컨테이너 -->
+    <div class="min-h-screen">
+        <div class="max-w-3xl mx-auto">
+            <div id="app"></div>
+        </div>
+    </div>
+
+    <!-- React 17 (중요: 17버전 사용) -->
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+
+    <!-- UMD Component -->
+    <script src="./dist/customer/poj2-customer-inquiry.umd.js"></script>
+
+    <script>
+        // 컴포넌트 렌더링
+        const CustomerInquiry = window.Poj2CustomerInquiry;
+        
+        // 이벤트 핸들러들
+        const handleSubmit = (data) => {
+            console.log('문의 제출:', data);
+            alert(`문의가 접수되었습니다.\n유형: ${data.mainType} > ${data.subType}\n상품: ${data.product}\n내용: ${data.content}\nSMS 알림: ${data.smsNotification ? '받음' : '받지 않음'}`);
+        };
+
+        const handleCancel = () => {
+            console.log('취소');
+            if (confirm('작성 중인 내용이 삭제됩니다. 취소하시겠습니까?')) {
+                // 취소 처리
+                console.log('문의 작성 취소됨');
+            }
+        };
+
+        const handleProductSelect = () => {
+            console.log('상품 선택 클릭');
+            // 실제 환경에서는 상품 선택 팝업이나 모달을 띄우고
+            // 선택된 상품 정보를 컴포넌트에 전달
+            alert('상품 선택 기능은 실제 환경에서 구현됩니다.');
+        };
+
+        // React 컴포넌트 렌더링
+        ReactDOM.render(
+            React.createElement(CustomerInquiry, {
+                onSubmit: handleSubmit,
+                onCancel: handleCancel,
+                onProductSelect: handleProductSelect
+            }),
+            document.getElementById('app')
+        );
+    </script>
+</body>
+</html>

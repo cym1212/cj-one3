@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poj2 OrderList Test</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config - 원본과 동일한 설정 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'accent': '#41c5af',
+                        'description': '#6b7280',
+                        'border': '#e5e7eb'
+                    },
+                    spacing: {
+                        '15': '3.75rem',
+                        '30': '7.5rem'
+                    },
+                    zIndex: {
+                        '2': '2'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="./dist/order/poj2-order-list.css">
+    
+    <style>
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="container mx-auto">
+        <h1 class="text-2xl font-bold p-4 mb-6">Poj2 OrderList 컴포넌트 테스트</h1>
+        
+        <!-- 기본 버전 -->
+        <div class="mb-8 bg-white rounded-lg shadow overflow-hidden">
+            <h2 class="text-lg font-semibold p-4 border-b bg-gray-50">기본 버전 (원본 데이터)</h2>
+            <div id="default-order-list"></div>
+        </div>
+        
+        <!-- 커스텀 버전 -->
+        <div class="mb-8 bg-white rounded-lg shadow overflow-hidden">
+            <h2 class="text-lg font-semibold p-4 border-b bg-gray-50">커스텀 버전 (수정된 데이터)</h2>
+            <div id="custom-order-list"></div>
+        </div>
+        
+        <!-- 이벤트 로그 -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-lg font-semibold mb-4">이벤트 로그</h2>
+            <div id="event-log" class="text-sm text-gray-600 space-y-2 max-h-60 overflow-y-auto bg-gray-50 p-4 rounded"></div>
+        </div>
+    </div>
+
+    <!-- React 17 -->
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+
+    <!-- Poj2 OrderList Component -->
+    <script src="./dist/order/poj2-order-list.umd.js"></script>
+
+    <script>
+        // 이벤트 로그 함수
+        function logEvent(message) {
+            const logDiv = document.getElementById('event-log');
+            const entry = document.createElement('div');
+            entry.className = 'py-2 px-3 bg-white rounded border mb-2';
+            entry.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <span class="text-xs text-gray-500">${new Date().toLocaleTimeString()}</span>
+                    <span class="text-sm">${message}</span>
+                </div>
+            `;
+            logDiv.insertBefore(entry, logDiv.firstChild);
+        }
+
+        // 기본 버전 렌더링
+        ReactDOM.render(
+            React.createElement(Poj2OrderList, {
+                onTabClick: (href, label) => {
+                    logEvent(`📋 <strong>기본</strong> - 탭 클릭: ${label} → ${href}`);
+                },
+                onFilterChange: (type, value) => {
+                    logEvent(`🔍 <strong>기본</strong> - 필터 변경: ${type} → ${value}`);
+                },
+                onLinkClick: (href, label) => {
+                    logEvent(`🔗 <strong>기본</strong> - ${label} 클릭 → ${href}`);
+                },
+                onButtonClick: (action, data) => {
+                    if (data) {
+                        logEvent(`🔘 <strong>기본</strong> - ${action} 버튼 클릭 → 주문ID: ${data.orderId}`);
+                    } else {
+                        logEvent(`🔘 <strong>기본</strong> - ${action} 버튼 클릭`);
+                    }
+                },
+                onSearchSubmit: (searchTerm) => {
+                    logEvent(`🔎 <strong>기본</strong> - 검색 실행: "${searchTerm}"`);
+                }
+            }),
+            document.getElementById('default-order-list')
+        );
+
+        // 커스텀 데이터
+        const customTabs = [
+            { label: "전체 주문", href: "/orders/all", isActive: true },
+            { label: "반품/교환", href: "/orders/returns" }
+        ];
+
+        const customPeriodOptions = [
+            { value: "recent-week", label: "최근 1주일" },
+            { value: "recent-month", label: "최근 1개월" },
+            { value: "recent-quarter", label: "최근 3개월" },
+            { value: "this-year", label: "올해" }
+        ];
+
+        const customStatusOptions = [
+            { value: "all", label: "모든 상태" },
+            { value: "processing", label: "처리중" },
+            { value: "shipped", label: "배송됨" },
+            { value: "completed", label: "완료" }
+        ];
+
+        const customOrders = [
+            {
+                orderId: 'CUSTOM-001',
+                title: '노트북 프로 모델 16인치',
+                option: '스페이스 그레이/512GB',
+                price: 2890000,
+                quantity: 1,
+                image: '/images/product/laptop.jpg',
+                orderDate: '2025-08-25',
+                deliveryDate: '2025-08-28',
+                deliveryStatus: '배송완료',
+            },
+            {
+                orderId: 'CUSTOM-002',
+                title: '무선 이어폰 프로',
+                option: '화이트/노이즈캔슬링',
+                price: 350000,
+                quantity: 2,
+                image: '/images/product/earphones.jpg',
+                orderDate: '2025-08-24',
+                deliveryDate: '2025-08-27',
+                deliveryStatus: '배송중',
+            }
+        ];
+
+        // 커스텀 버전 렌더링
+        ReactDOM.render(
+            React.createElement(Poj2OrderList, {
+                tabs: customTabs,
+                title: "나의 주문 관리",
+                periodOptions: customPeriodOptions,
+                statusOptions: customStatusOptions,
+                orders: customOrders,
+                defaultPeriod: "recent-month",
+                defaultStatus: "all",
+                onTabClick: (href, label) => {
+                    logEvent(`📋 <strong>커스텀</strong> - 탭 클릭: ${label} → ${href}`);
+                },
+                onFilterChange: (type, value) => {
+                    logEvent(`🔍 <strong>커스텀</strong> - 필터 변경: ${type} → ${value}`);
+                },
+                onLinkClick: (href, label) => {
+                    logEvent(`🔗 <strong>커스텀</strong> - ${label} 클릭 → ${href}`);
+                },
+                onButtonClick: (action, data) => {
+                    if (data) {
+                        logEvent(`🔘 <strong>커스텀</strong> - ${action} 버튼 클릭 → 주문ID: ${data.orderId}`);
+                    } else {
+                        logEvent(`🔘 <strong>커스텀</strong> - ${action} 버튼 클릭`);
+                    }
+                },
+                onSearchSubmit: (searchTerm) => {
+                    logEvent(`🔎 <strong>커스텀</strong> - 검색 실행: "${searchTerm}"`);
+                }
+            }),
+            document.getElementById('custom-order-list')
+        );
+
+        logEvent('✅ OrderList 컴포넌트 초기화 완료');
+        logEvent('📱 반응형 테스트: 창 크기를 조절해보세요 (모바일 탭 확인)');
+        logEvent('🔽 필터를 변경하고 검색을 해보세요');
+        logEvent('🖱️ 링크와 버튼을 클릭하여 이벤트를 테스트해보세요');
+    </script>
+</body>
+</html>

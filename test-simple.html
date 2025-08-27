@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Test</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'accent': '#41c5af',
+                        'description': '#6b7280',
+                        'border': '#e5e7eb'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 p-8">
+    <h1>간단한 테스트</h1>
+    
+    <div id="test-component" style="border: 1px solid red; min-height: 300px; background: white; padding: 20px;">
+        컴포넌트가 여기에 렌더링 됩니다...
+    </div>
+    
+    <div id="logs" style="margin-top: 20px; background: #f0f0f0; padding: 10px;">
+        <h3>로그:</h3>
+        <div id="log-content"></div>
+    </div>
+
+    <!-- React -->
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+
+    <!-- Component -->
+    <script src="./dist/poj2-myzone-sidebar.js"></script>
+
+    <script>
+        function log(message) {
+            const logDiv = document.getElementById('log-content');
+            const entry = document.createElement('div');
+            entry.textContent = `${new Date().toLocaleTimeString()}: ${message}`;
+            logDiv.appendChild(entry);
+        }
+        
+        log('페이지 로드 시작');
+        log('React 로드: ' + (typeof React !== 'undefined' ? 'OK' : 'FAIL'));
+        log('ReactDOM 로드: ' + (typeof ReactDOM !== 'undefined' ? 'OK' : 'FAIL'));
+        log('Component 로드: ' + (typeof Poj2MyzoneSidebar !== 'undefined' ? 'OK' : 'FAIL'));
+        
+        if (typeof Poj2MyzoneSidebar !== 'undefined') {
+            try {
+                log('컴포넌트 렌더링 시도...');
+                ReactDOM.render(
+                    React.createElement(Poj2MyzoneSidebar, {
+                        onLinkClick: (href, label) => {
+                            log('클릭: ' + label + ' -> ' + href);
+                        }
+                    }),
+                    document.getElementById('test-component')
+                );
+                log('렌더링 성공!');
+            } catch (error) {
+                log('렌더링 에러: ' + error.message);
+            }
+        } else {
+            log('컴포넌트를 찾을 수 없습니다');
+        }
+    </script>
+</body>
+</html>

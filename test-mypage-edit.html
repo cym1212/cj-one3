@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poj2 MyPageEdit Test</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'accent': '#41c5af',
+                        'description': '#6b7280',
+                        'border': '#e5e7eb'
+                    },
+                    spacing: {
+                        '15': '3.75rem',
+                        '30': '7.5rem'
+                    },
+                    zIndex: {
+                        '2': '2'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="./dist/myzone/poj2-mypage-edit.css">
+
+    <style>
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <div id="app"></div>
+
+    <!-- React 17 -->
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+
+    <!-- UMD Component -->
+    <script src="./dist/myzone/poj2-mypage-edit.umd.js"></script>
+
+    <script>
+        // 샘플 데이터
+        const sampleProps = {
+            userId: 'test',
+            userName: '홍길동',
+            phoneNumber: '010-1234-5678',
+            homePhone: '02-123-4567',
+            email: 'test@naver.com',
+            postCode: '12345',
+            address: '서울특별시 광진구 긴고랑로',
+            detailAddress: '2층',
+            birthDate: '********',
+            socialLogin: {
+                naver: false,
+                apple: false,
+                kakao: false
+            },
+            marketing: {
+                personalized: false,
+                email: false,
+                sms: false,
+                call: false,
+                nightSms: false,
+                nightCall: false,
+                cjService: false
+            },
+            onSubmit: function(data) {
+                console.log('Form submitted:', data);
+                alert('저장되었습니다.');
+            },
+            onCancel: function() {
+                console.log('Cancelled');
+                alert('취소되었습니다.');
+            }
+        };
+
+        ReactDOM.render(
+            React.createElement(Poj2MyPageEdit, sampleProps),
+            document.getElementById('app')
+        );
+    </script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>픽셀 퍼펙트 MyZone Sidebar 테스트</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config - 원본과 동일한 설정 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'accent': '#41c5af',
+                        'description': '#6b7280',
+                        'border': '#e5e7eb'
+                    },
+                    spacing: {
+                        '15': '3.75rem',
+                        '30': '7.5rem'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="./dist/poj2-myzone-sidebar.css">
+    
+    <style>
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- 원본과 동일한 구조 재현 -->
+    <div class="min-h-screen bg-white">
+        <!-- 원본과 동일한 그리드 레이아웃 -->
+        <section class="poj2-myzone grid grid-cols-1 lg:grid-cols-[180px_calc(100%-200px)] gap-4 lg:gap-5">
+            
+            <!-- 네비게이션 (원본과 동일한 위치와 크기) -->
+            <div class="max-lg:order-2 border-r border-border">
+                <div id="myzone-sidebar"></div>
+            </div>
+
+            <!-- 모바일 분선 -->
+            <div class="order-1 block lg:hidden w-full h-2 bg-border/25"></div>
+
+            <!-- 컨텐츠 영역 (비교를 위해) -->
+            <div class="lg:pt-12 pb-15 lg:pb-30 bg-gray-50">
+                <div class="p-6">
+                    <h2 class="text-2xl font-bold mb-4">컨텐츠 영역</h2>
+                    <p class="text-gray-600 mb-4">
+                        왼쪽의 사이드바가 원본과 동일한 180px 너비와 스타일로 렌더링되는지 확인하세요.
+                    </p>
+                    
+                    <!-- 클릭 이벤트 로그 -->
+                    <div class="mt-8 bg-white p-4 rounded border">
+                        <h3 class="text-lg font-semibold mb-3">클릭 이벤트 로그</h3>
+                        <div id="event-log" class="text-sm text-gray-600 space-y-1 max-h-40 overflow-y-auto bg-gray-50 p-3 rounded">
+                            <!-- 로그가 여기에 추가됩니다 -->
+                        </div>
+                    </div>
+                    
+                    <!-- 레이아웃 디버그 정보 -->
+                    <div class="mt-6 bg-blue-50 p-4 rounded border border-blue-200">
+                        <h4 class="font-semibold text-blue-900 mb-2">레이아웃 정보</h4>
+                        <ul class="text-sm text-blue-800 space-y-1">
+                            <li>• 사이드바 너비: 180px (lg 이상)</li>
+                            <li>• 컨텐츠 너비: calc(100% - 200px) (lg 이상)</li>
+                            <li>• 모바일에서는 전체 너비 사용</li>
+                            <li>• 원본과 동일한 패딩, 마진, 폰트 크기 적용</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- React 17 -->
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+
+    <!-- MyZone Sidebar Component -->
+    <script src="./dist/poj2-myzone-sidebar.js"></script>
+
+    <script>
+        // 이벤트 로그 함수
+        function logEvent(message) {
+            const logDiv = document.getElementById('event-log');
+            const entry = document.createElement('div');
+            entry.className = 'py-1 border-b border-gray-200 last:border-0';
+            entry.innerHTML = `<span class="text-gray-500">[${new Date().toLocaleTimeString()}]</span> ${message}`;
+            logDiv.appendChild(entry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        // 컴포넌트 렌더링
+        try {
+            ReactDOM.render(
+                React.createElement(Poj2MyzoneSidebar, {
+                    showTitle: true,
+                    titleText: "마이존",
+                    titleHref: "/myzone", 
+                    onLinkClick: (href, label) => {
+                        logEvent(`<strong>${label}</strong> 메뉴 클릭 → <code>${href}</code>`);
+                    }
+                }),
+                document.getElementById('myzone-sidebar')
+            );
+            
+            logEvent('✅ MyZone Sidebar 컴포넌트 렌더링 완료');
+            logEvent('📱 반응형 테스트: 창 크기를 조절해보세요');
+            logEvent('🖱️ 메뉴 항목을 클릭하여 이벤트를 테스트해보세요');
+            
+        } catch (error) {
+            logEvent(`❌ 렌더링 에러: ${error.message}`);
+            console.error('Rendering error:', error);
+        }
+    </script>
+</body>
+</html>

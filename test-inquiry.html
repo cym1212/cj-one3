@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poj2 InquiryList Test</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'accent': '#41c5af',
+                        'description': '#6b7280',
+                        'border': '#e5e7eb',
+                        'discount': '#ef4444'
+                    },
+                    spacing: {
+                        '15': '3.75rem',
+                        '30': '7.5rem'
+                    },
+                    zIndex: {
+                        '2': '2'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <div class="container mx-auto">
+        <div id="app"></div>
+    </div>
+    
+    <!-- React 17 -->
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    
+    <!-- UMD Component -->
+    <script src="./dist/myzone/poj2-inquiry.umd.js"></script>
+    
+    <script>
+        // 샘플 데이터 (실제로는 API에서 받아올 데이터)
+        const inquiryData = [
+            {
+                id: '1',
+                status: 'answered',
+                category: '배송 문의',
+                subcategory: '배송일정 문의',
+                date: '2025-08-27 10:21',
+                orderNumber: '2025-08-26-101661',
+                productName: '현 고백자 수저받침 2P세트',
+                productImage: 'https://via.placeholder.com/56',
+                content: '배송 예정일이 언제인지 알려주세요. 일정 조율이 필요합니다.'
+            },
+            {
+                id: '2',
+                status: 'pending',
+                category: '교환/반품 문의',
+                subcategory: '배송지 변경 요청',
+                date: '2025-08-26 18:03',
+                orderNumber: '2025-08-27-101632',
+                productName: '여성 크로스백 8103378',
+                productImage: 'https://via.placeholder.com/56',
+                content: '다음 주소로 변경 부탁드립니다. (서울시 강남구 테헤란로 521 파르나스타워 10층)'
+            },
+            {
+                id: '3',
+                status: 'answered',
+                category: '주문/결제 문의',
+                subcategory: '배송비 문의',
+                date: '2025-08-25 09:41',
+                content: '주문 시 배송비가 이중으로 계산된 것 같습니다. 확인 부탁드립니다.'
+            },
+            {
+                id: '4',
+                status: 'pending',
+                category: '상품 문의',
+                subcategory: '배송 오류 문의',
+                date: '2025-08-24 21:10',
+                content: '같은 상품을 2건 주문했는데 1건만 배송완료로 표기됩니다.'
+            },
+            {
+                id: '5',
+                status: 'answered',
+                category: '상품 문의',
+                subcategory: '상품 재입고 문의',
+                date: '2025-08-23 14:30',
+                orderNumber: '2025-08-23-100982',
+                productName: '프리미엄 텀블러 500ml',
+                productImage: 'https://via.placeholder.com/56',
+                content: '품절된 상품의 재입고 일정이 언제인지 문의드립니다.'
+            },
+            {
+                id: '6',
+                status: 'pending',
+                category: '기타 문의',
+                subcategory: '회원 정보 변경',
+                date: '2025-08-22 11:15',
+                content: '이메일 주소 변경은 어떻게 하나요?'
+            }
+        ];
+        
+        ReactDOM.render(
+            React.createElement(Poj2InquiryList, {
+                data: inquiryData,
+                onItemClick: (item) => {
+                    console.log('문의 클릭:', item);
+                    alert(`문의 상세보기: ${item.category} - ${item.subcategory}`);
+                }
+            }),
+            document.getElementById('app')
+        );
+    </script>
+</body>
+</html>
