@@ -1,0 +1,157 @@
+export interface QnAData {
+    id: number;
+    question: string;
+    answer?: string;
+    answered: boolean;
+    userId: string;
+    date: string;
+    isMyQuestion?: boolean;
+}
+
+export const SAMPLE_QNA: QnAData[] = [
+    {
+        id: 1,
+        question:
+            '언제출고되나요?????언제출고되나요?????언제출고되나요?????언제출고되나요?????언제출고되나요?????언제출고되나요?????언제출고되나요?????언제출고되나요?????언제출고되나요?????언제출고되나요?????언제출고되나요?????언제출고되나요?????언제출고되나요?????언제출고되나요?????언제출고되나요?????언제출고되나요?????언제출고되나요?????언제출고되나요?????언제출고되나요?????',
+        answered: false,
+        userId: 'miss0***',
+        date: '2025.08.18',
+        isMyQuestion: false,
+    },
+    {
+        id: 2,
+        question: '사이즈는 정사이즈로 구매해야 하나요?',
+        answer: '안녕하세요 회원님, 문의주신 상품의 반사이즈는 근육으로 권장드립니다. 다만, 사이즈는 실 착용 시 개인차가 있을 수 있기 때문에 모바일 상품정보 더보기 클릭 후 하단에 표기된 상세 사이즈 참고하시어 주문 부탁드립니다. 감사합니다',
+        answered: true,
+        userId: 'ysdua***',
+        date: '2025.08.16',
+        isMyQuestion: false,
+    },
+    {
+        id: 3,
+        question: '비밀글입니다.',
+        answered: false,
+        userId: 'jackpo***',
+        date: '2025.08.11',
+        isMyQuestion: false,
+    },
+    {
+        id: 4,
+        question: '비밀글입니다.',
+        answered: false,
+        userId: 'dree***',
+        date: '2025.08.11',
+        isMyQuestion: false,
+    },
+    {
+        id: 5,
+        question: '시스루안에 탑은 어디서 구매하하나요?',
+        answered: false,
+        userId: 'vik***',
+        date: '2025.08.02',
+        isMyQuestion: false,
+    },
+    {
+        id: 6,
+        question: '재입고 언제되나요?',
+        answer: '안녕하세요 회원님, 문의주신 상품은 현재 완판으로 재입고 일정이 미정 상태입니다. 재입고 시 알림받기를 신청해 주시면 입고 시 알림 메일을 발송해 드리겠습니다.',
+        answered: true,
+        userId: 'shop***',
+        date: '2025.07.28',
+        isMyQuestion: false,
+    },
+    {
+        id: 7,
+        question: '배송일정 문의드립니다',
+        answered: false,
+        userId: 'user***',
+        date: '2025.07.25',
+        isMyQuestion: true,
+    },
+    {
+        id: 8,
+        question: '교환 가능한가요?',
+        answer: '네, 배송 후 7일 이내에 교환 신청 가능합니다. 단, 상품 태그 제거 및 착용 흔적이 있는 경우 교환이 어려울 수 있습니다.',
+        answered: true,
+        userId: 'member***',
+        date: '2025.07.20',
+        isMyQuestion: false,
+    },
+    {
+        id: 9,
+        question: '세탁 방법이 궁금해요',
+        answered: false,
+        userId: 'clean***',
+        date: '2025.07.18',
+        isMyQuestion: true,
+    },
+    {
+        id: 10,
+        question: '컬러 추가 출시 예정인가요?',
+        answer: '현재 추가 컬러 출시 계획은 미정입니다. 신상품 출시 시 홈페이지 및 SNS를 통해 안내드리겠습니다.',
+        answered: true,
+        userId: 'color***',
+        date: '2025.07.15',
+        isMyQuestion: false,
+    },
+    {
+        id: 11,
+        question: '할인 적용 가능한가요?',
+        answered: false,
+        userId: 'sale***',
+        date: '2025.07.12',
+        isMyQuestion: false,
+    },
+    {
+        id: 12,
+        question: '모델 착용 사이즈 문의',
+        answer: '모델은 55사이즈를 착용하였습니다. 참고 부탁드립니다.',
+        answered: true,
+        userId: 'model***',
+        date: '2025.07.10',
+        isMyQuestion: false,
+    },
+    {
+        id: 13,
+        question: '매장에서 직접 확인 가능한가요?',
+        answered: false,
+        userId: 'store***',
+        date: '2025.07.08',
+        isMyQuestion: true,
+    },
+    {
+        id: 14,
+        question: '소재 상세 정보 문의',
+        answer: '해당 상품은 면 100% 소재로 제작되었습니다. 자세한 소재 정보는 상품 상세페이지를 참고해 주세요.',
+        answered: true,
+        userId: 'fabric***',
+        date: '2025.07.05',
+        isMyQuestion: false,
+    },
+    {
+        id: 15,
+        question: '적립금 사용 가능한가요?',
+        answered: false,
+        userId: 'point***',
+        date: '2025.07.02',
+        isMyQuestion: false,
+    },
+    {
+        id: 16,
+        question: '반품 절차 문의드립니다',
+        answer: '반품 신청은 마이페이지 > 주문내역에서 가능하며, 상품 수령 후 7일 이내 신청해 주시기 바랍니다.',
+        answered: true,
+        userId: 'return***',
+        date: '2025.06.30',
+        isMyQuestion: true,
+    },
+    {
+        id: 17,
+        question: '반품비 발생된다는게 상세페이지에 있나요? 제가 못찾은건가요? 그런문구없어서 고민끝에 주문했는데 사이즈 안맞아 반품하려니 반품비가 차감됐네요 어느부분에 기재돼있는지 확인해서 답변좀 주세요',
+        answer: '안녕하세요. 회원님. 반품비 부과로 속상하셨을 것 같습니다. 반품비 부과 관련 내용은 상품 페이지 하단 〈교환 반품안내〉에 고지하고 있는 점 양해 부탁드립니다. 보다 나은 서비스 제공을 위해 노력하겠습니다. 감사합니다.',
+        answered: true,
+        userId: 'chenn***',
+        date: '2025.08.21',
+        isMyQuestion: false,
+    },
+];

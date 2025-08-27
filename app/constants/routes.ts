@@ -1,0 +1,17 @@
+export const STATIC_ROUTE_TITLES: Record<string, string> = {
+    '/benefit': '혜택',
+    '/login': '로그인',
+    '/myzone': '마이존',
+    '/myzone/orders': '주문현황',
+    '/myzone/order-detail/*': '주문상세',
+    '/myzone/credit': '적립금',
+    '/myzone/coupon': '쿠폰',
+    '/myzone/review': '리뷰',
+    '/myzone/profile': '개인정보수정',
+    '/myzone/withdraw': '회원탈퇴',
+    '/myzone/check-pw': '비밀번호 확인',
+    '/cart': '장바구니',
+    '/gift': '선물하기',
+    '/customer-center/inquiry': '문의하기',
+    '/customer-center/inquiry-history': '문의내역',
+};
