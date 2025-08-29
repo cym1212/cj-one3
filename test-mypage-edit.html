@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poj2 MyPageEdit Test</title>
+    <title>Poj2 UserProfile Test - UserProfile API 적용</title>
 
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CSS CDN (자동 로드되지만 백업용) -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Tailwind Config -->
@@ -14,9 +14,10 @@
             theme: {
                 extend: {
                     colors: {
-                        'accent': '#41c5af',
-                        'description': '#6b7280',
-                        'border': '#e5e7eb'
+                        'accent': '#640faf',
+                        'muted-foreground': '#6b7280',
+                        'border': '#e5e7eb',
+                        'muted': '#f3f4f6'
                     },
                     spacing: {
                         '15': '3.75rem',
@@ -40,55 +41,236 @@
     </style>
 </head>
 <body class="bg-white">
-    <div id="app"></div>
+    <!-- 컨테이너 -->
+    <div class="min-h-screen">
+        <div class="max-w-4xl mx-auto">
+            <div id="app"></div>
+        </div>
+    </div>
 
-    <!-- React 17 -->
-    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <!-- React 17 (중요: 17버전 사용) -->
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
 
     <!-- UMD Component -->
     <script src="./dist/myzone/poj2-mypage-edit.umd.js"></script>
 
     <script>
-        // 샘플 데이터
-        const sampleProps = {
-            userId: 'test',
-            userName: '홍길동',
-            phoneNumber: '010-1234-5678',
-            homePhone: '02-123-4567',
-            email: 'test@naver.com',
-            postCode: '12345',
-            address: '서울특별시 광진구 긴고랑로',
-            detailAddress: '2층',
-            birthDate: '********',
-            socialLogin: {
-                naver: false,
-                apple: false,
-                kakao: false
+        // UserProfile API 기반 테스트 데이터
+        const testUserInfo = {
+            id: 1,
+            insungId: 'testuser123',
+            name: '김철수',
+            phone: '010-1234-5678',
+            email: 'test@example.com',
+            birthday: '1990-05-15',
+            address: '서울특별시 강남구 테헤란로 123',
+            created_at: '2020-03-15T00:00:00Z',
+            var01: '개인정보',
+            var02: 'KB|123-456-789',
+            var03: '900515-1******'
+        };
+
+        // 상태 관리 시뮬레이션
+        let currentState = {
+            userInfo: testUserInfo,
+            editedInfo: {},
+            loading: false,
+            errors: {},
+            showPasswordFields: false,
+            isUserLoggedIn: true,
+            isAdminMode: false,
+            isEditing: false,
+            saveError: null,
+            highlightedFields: {},
+            referralLink: 'https://example.com/refer/testuser123',
+            userInfoLoading: false,
+            copied: false,
+            varFields: {
+                var01: { show: true, label: '추가정보', type: 'input', required: false },
+                var02: { show: true, label: '계좌번호', type: 'account', required: false },
+                var03: { show: true, label: '주민등록번호', type: 'ssn', required: false }
             },
-            marketing: {
-                personalized: false,
-                email: false,
-                sms: false,
-                call: false,
-                nightSms: false,
-                nightCall: false,
-                cjService: false
-            },
-            onSubmit: function(data) {
-                console.log('Form submitted:', data);
-                alert('저장되었습니다.');
-            },
-            onCancel: function() {
-                console.log('Cancelled');
-                alert('취소되었습니다.');
+            theme: {},
+            withcookieData: {
+                skin: {
+                    theme: {
+                        colorset: {
+                            primary: '#640faf',
+                            secondary: '#6b7280',
+                            tertiary: '#28a745'
+                        }
+                    },
+                    companyId: 24
+                }
             }
         };
 
-        ReactDOM.render(
-            React.createElement(Poj2MyPageEdit, sampleProps),
-            document.getElementById('app')
-        );
+        // Actions 구현
+        const actions = {
+            handleFieldChange: (field, value) => {
+                console.log('Field change:', field, value);
+                currentState.editedInfo[field] = value;
+                // 에러 제거
+                delete currentState.errors[field];
+                renderComponent();
+            },
+
+            handleUpdate: async () => {
+                console.log('Update triggered');
+                await actions.handleSave();
+            },
+
+            handleSave: async () => {
+                console.log('Save triggered');
+                currentState.loading = true;
+                currentState.saveError = null;
+                renderComponent();
+
+                // 저장 시뮬레이션
+                setTimeout(() => {
+                    // 성공 시나리오
+                    if (Math.random() > 0.2) {
+                        // 사용자 정보 업데이트
+                        Object.keys(currentState.editedInfo).forEach(key => {
+                            if (currentState.editedInfo[key]) {
+                                currentState.userInfo[key] = currentState.editedInfo[key];
+                                currentState.highlightedFields[key] = true;
+                            }
+                        });
+                        
+                        currentState.isEditing = false;
+                        currentState.editedInfo = {};
+                        currentState.loading = false;
+                        currentState.showPasswordFields = false;
+                        
+                        alert('저장이 완료되었습니다!');
+                        
+                        // 하이라이트 효과 제거
+                        setTimeout(() => {
+                            currentState.highlightedFields = {};
+                            renderComponent();
+                        }, 3000);
+                    } else {
+                        // 실패 시나리오
+                        currentState.loading = false;
+                        currentState.saveError = '저장 중 오류가 발생했습니다. 다시 시도해 주세요.';
+                    }
+                    renderComponent();
+                }, 1000);
+            },
+
+            handleEdit: () => {
+                console.log('Edit mode enabled');
+                currentState.isEditing = true;
+                currentState.editedInfo = { ...currentState.userInfo };
+                currentState.saveError = null;
+                renderComponent();
+            },
+
+            handleCancel: () => {
+                console.log('Edit cancelled');
+                currentState.isEditing = false;
+                currentState.editedInfo = {};
+                currentState.showPasswordFields = false;
+                currentState.errors = {};
+                currentState.saveError = null;
+                renderComponent();
+            },
+
+            togglePasswordChange: () => {
+                console.log('Password toggle');
+                currentState.showPasswordFields = !currentState.showPasswordFields;
+                if (!currentState.showPasswordFields) {
+                    delete currentState.editedInfo.password;
+                    delete currentState.editedInfo.passwordConfirm;
+                }
+                renderComponent();
+            },
+
+            copyToClipboard: () => {
+                console.log('Copy to clipboard');
+                navigator.clipboard.writeText(currentState.referralLink).then(() => {
+                    currentState.copied = true;
+                    renderComponent();
+                    setTimeout(() => {
+                        currentState.copied = false;
+                        renderComponent();
+                    }, 2000);
+                }).catch(() => {
+                    alert('클립보드 복사에 실패했습니다.');
+                });
+            }
+        };
+
+        // Options - 속성 패널에서 제어 가능한 필드들
+        const options = {
+            title: '회원정보 수정',
+            basicFields: {
+                userId: true,
+                name: true,
+                password: true,
+                phone: true,
+                email: true,
+                birthday: true,
+                createdAt: true,
+                address: true,
+                referralLink: true,
+                var01: true,        // 추가정보 필드 표시
+                var02: true,        // 계좌번호 필드 표시
+                var03: true,        // 주민등록번호 필드 표시
+                var04: false,       // 숨김
+                var05: false,       // 숨김
+                var06: false,       // 숨김
+                var07: false,       // 숨김
+                var08: false,       // 숨김
+                var09: false,       // 숨김
+                var10: false        // 숨김
+            }
+        };
+
+        // Utils
+        const utils = {
+            t: (key) => key,
+            navigate: (path) => console.log('Navigate:', path),
+            formatCurrency: (amount, currency = '원') => `${amount.toLocaleString()}${currency}`,
+            formatDate: (date, format = 'YYYY-MM-DD') => {
+                const d = new Date(date);
+                return d.toISOString().split('T')[0];
+            },
+            getAssetUrl: (path) => path,
+            cx: (...classes) => classes.filter(Boolean).join(' ')
+        };
+
+        // App
+        const app = {
+            user: testUserInfo,
+            settings: {},
+            theme: {},
+            company: { id: 24 }
+        };
+
+        // 컴포넌트 렌더링 함수
+        function renderComponent() {
+            const UserProfile = window.Poj2MyPageEdit;
+            
+            ReactDOM.render(
+                React.createElement(UserProfile, {
+                    data: currentState,
+                    actions: actions,
+                    options: options,
+                    mode: 'production',
+                    utils: utils,
+                    app: app
+                }),
+                document.getElementById('app')
+            );
+        }
+
+        // 초기 렌더링
+        renderComponent();
+
+        console.log('UserProfile component initialized with UserProfile API');
     </script>
 </body>
 </html>

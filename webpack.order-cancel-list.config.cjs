@@ -3,13 +3,13 @@ const path = require('path');
 module.exports = {
   mode: 'production',
   entry: {
-    'mypage-edit': './app/components/ui/MypageEditStandalone.tsx'
+    'order-cancel-list': './app/components/ui/OrderCancelListStandalone.tsx'
   },
   output: {
-    path: path.resolve(__dirname, 'dist/myzone'),
-    filename: 'poj2-mypage-edit.umd.js',
+    path: path.resolve(__dirname, 'dist/order'),
+    filename: 'poj2-order-cancel-list.umd.js',
     library: {
-      name: 'Poj2MyPageEdit',
+      name: 'Poj2OrderCancelList',
       type: 'umd',
       export: 'default'
     },

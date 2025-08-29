@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poj2 Order Cancel List Test</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'accent': '#41c5af',
+                        'description': '#6b7280',
+                        'border': '#e5e7eb'
+                    },
+                    spacing: {
+                        '15': '3.75rem',
+                        '30': '7.5rem'
+                    },
+                    zIndex: {
+                        '2': '2'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="./dist/order/poj2-order-cancel-list.css">
+
+    <style>
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- 모바일 헤더 (테스트용) -->
+    <div class="lg:hidden bg-white border-b">
+        <div class="flex items-center p-4">
+            <button class="mr-3">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <h1 class="text-lg font-semibold">취소/교환/반품 조회</h1>
+        </div>
+    </div>
+
+    <!-- 컴포넌트 렌더링 영역 -->
+    <div class="max-w-6xl mx-auto bg-white">
+        <div id="app"></div>
+    </div>
+
+    <!-- React 17 (중요: 17버전 사용) -->
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+
+    <!-- UMD Component -->
+    <script src="./dist/order/poj2-order-cancel-list.umd.js"></script>
+
+    <script>
+        // 샘플 주문 데이터
+        const sampleOrders = [
+            {
+                orderNumber: '2025-08-27-101661',
+                productName: '남성 크로스백 8103378',
+                productImage: '/images/product/product-1-2.jpg',
+                status: '상품준비중',
+                deliveryInfo: '8/29(금)이내 도착예정',
+                description: '단일상품',
+                quantity: 1,
+                price: 1318100
+            },
+            {
+                orderNumber: '2025-08-27-101632',
+                productName: '여성 크로스백 8103378',
+                productImage: '/images/product/product-1-2.jpg',
+                status: '상품준비중',
+                deliveryInfo: '8/29(금)이내 도착예정',
+                description: '단일상품',
+                quantity: 1,
+                price: 1318100
+            }
+        ];
+
+        // 컴포넌트 렌더링
+        ReactDOM.render(
+            React.createElement(window.Poj2OrderCancelList, {
+                orders: sampleOrders,
+                onOrderDetailClick: function(orderNumber) {
+                    alert('주문 상세보기 클릭: ' + orderNumber);
+                    console.log('Order detail clicked:', orderNumber);
+                },
+                onProductClick: function(orderNumber) {
+                    alert('상품 클릭: ' + orderNumber);
+                    console.log('Product clicked:', orderNumber);
+                },
+                onCancelRequest: function(orderNumber) {
+                    alert('취소신청: ' + orderNumber);
+                    console.log('Cancel request:', orderNumber);
+                },
+                onReturnRequest: function(orderNumber) {
+                    alert('반품신청: ' + orderNumber);
+                    console.log('Return request:', orderNumber);
+                },
+                onPurchaseConfirm: function(orderNumber) {
+                    alert('구매확정: ' + orderNumber);
+                    console.log('Purchase confirm:', orderNumber);
+                },
+                onPeriodChange: function(period) {
+                    console.log('Period changed:', period);
+                },
+                onStatusChange: function(status) {
+                    console.log('Status changed:', status);
+                }
+            }),
+            document.getElementById('app')
+        );
+    </script>
+</body>
+</html>

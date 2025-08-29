@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poj2 MobileMainSlider Test</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Swiper CSS CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'accent': '#41c5af',
+                        'description': '#6b7280',
+                        'border': '#e5e7eb',
+                        'discount': '#ef4444'
+                    },
+                    spacing: {
+                        '15': '3.75rem',
+                        '30': '7.5rem'
+                    },
+                    zIndex: {
+                        '1': '1',
+                        '2': '2'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="./dist/slider/poj2-mobile-slider.css">
+    
+    <style>
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+        }
+        
+        /* Swiper 커스텀 스타일 */
+        .poj2-mobile-main-slider .swiper-wrapper {
+            transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <div class="max-w-md mx-auto bg-white">
+        <div id="app"></div>
+    </div>
+    
+    <!-- React 17 -->
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    
+    <!-- UMD Component -->
+    <script src="./dist/slider/poj2-mobile-slider.umd.js"></script>
+    
+    <script>
+        // 샘플 데이터
+        const sliderData = [
+            {
+                content: '새로운 컬렉션 출시\n스타일과 편안함을 동시에',
+                path: '/collection/new',
+                image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=400&fit=crop&crop=center',
+                badges: ['신상품', '특가혜택']
+            },
+            {
+                content: '봄 시즌 특별 할인\n최대 50% 할인 혜택',
+                path: '/promotion/spring',
+                image: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=400&h=400&fit=crop&crop=center',
+                badges: ['50% 할인', '한정판매']
+            },
+            {
+                content: '프리미엄 라인업\n럭셔리한 경험을 제공',
+                path: '/premium',
+                image: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=400&fit=crop&crop=center',
+                badges: ['프리미엄', '럭셔리']
+            },
+            {
+                content: '여름 트렌드 아이템\n시원하고 스타일리시하게',
+                path: '/summer-trend',
+                image: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=400&h=400&fit=crop&crop=center',
+                badges: ['트렌드', '여름신상']
+            },
+            {
+                content: '베스트셀러 모음\n인기 상품을 한눈에',
+                path: '/bestseller',
+                image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop&crop=center',
+                badges: ['베스트', '인기상품']
+            }
+        ];
+        
+        ReactDOM.render(
+            React.createElement(Poj2MobileMainSlider, {
+                data: sliderData,
+                onSlideClick: (slide) => {
+                    console.log('슬라이드 클릭:', slide);
+                    alert(`슬라이드 클릭: ${slide.content.split('\\n')[0]}`);
+                }
+            }),
+            document.getElementById('app')
+        );
+    </script>
+</body>
+</html>

@@ -3,13 +3,13 @@ const path = require('path');
 module.exports = {
   mode: 'production',
   entry: {
-    'mypage-edit': './app/components/ui/MypageEditStandalone.tsx'
+    'mobile-slider': './app/components/ui/MobileMainSliderStandalone.tsx'
   },
   output: {
-    path: path.resolve(__dirname, 'dist/myzone'),
-    filename: 'poj2-mypage-edit.umd.js',
+    path: path.resolve(__dirname, 'dist/slider'),
+    filename: 'poj2-mobile-slider.umd.js',
     library: {
-      name: 'Poj2MyPageEdit',
+      name: 'Poj2MobileMainSlider',
       type: 'umd',
       export: 'default'
     },
@@ -47,7 +47,7 @@ module.exports = {
           }
         ],
         exclude: /node_modules/
-      }
+      },
     ]
   },
   resolve: {
