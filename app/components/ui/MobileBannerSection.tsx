@@ -41,50 +41,14 @@ interface BrandBanner {
 }
 
 export interface MobileBannerSectionProps {
-  topBannerImage?: string;
-  topBannerAlt?: string;
   brandBanner?: BrandBanner;
   marketingSlides?: MarketingSlide[];
 }
 
-// 기본 데이터
-const defaultData = {
-  topBannerImage: "/images/banner/benefit-m.png",
-  topBannerAlt: "오늘 혜택이 가장 좋아요",
-  brandBanner: {
-    id: 1,
-    title: "이벤트",
-    brandLogo: "/images/brand/new-balance.png",
-    eventImage: "/images/banner/event.jpg",
-    link: "/brand/1"
-  },
-  marketingSlides: [
-    {
-      id: 1,
-      title: "실시간 판매 1등",
-      image: "/images/banner/marketing-slide-1.jpg"
-    },
-    {
-      id: 2,
-      title: "오프라인",
-      image: "/images/banner/marketing-slide-2.jpg"
-    },
-    {
-      id: 3,
-      title: "특별한 혜택",
-      image: "/images/banner/marketing-slide-3.jpg"
-    },
-    {
-      id: 4,
-      title: "실시간 판매 1등",
-      image: "/images/banner/marketing-slide-1.jpg"
-    },
-    {
-      id: 5,
-      title: "오프라인",
-      image: "/images/banner/marketing-slide-2.jpg"
-    }
-  ]
+// 기본 데이터 (빈 값)
+const defaultData: MobileBannerSectionProps = {
+  brandBanner: undefined,
+  marketingSlides: []
 };
 
 function MobileBannerSection(props: ComponentSkinProps | MobileBannerSectionProps) {
@@ -95,9 +59,7 @@ function MobileBannerSection(props: ComponentSkinProps | MobileBannerSectionProp
   const isComponentSkinProps = 'data' in props && 'actions' in props;
   
   let data: {
-    topBannerImage?: string;
-    topBannerAlt?: string;
-    brandBanner?: BrandBanner;
+    brandBanner?: BrandBanner | null;
     marketingSlides?: MarketingSlide[];
   };
   
@@ -139,9 +101,6 @@ function MobileBannerSection(props: ComponentSkinProps | MobileBannerSectionProp
       sliderTitle,
       showTitle,
       
-      // 상단 배너
-      topBannerImage: topBanner,
-      topBannerAlt: topAlt,
       
       // 스타일
       containerStyle,
@@ -156,27 +115,26 @@ function MobileBannerSection(props: ComponentSkinProps | MobileBannerSectionProp
       const marketingSlides = allProducts?.slice(0, 5).map((product: any, index: number) => ({
         id: product.id || index,
         title: product.title || product.name || '상품명',
-        image: product.image || product.config?.img_url || '/images/banner/marketing-slide-1.jpg',
+        image: product.image || product.config?.img_url,
         link: `/products/${product.id}`
-      })) || defaultData.marketingSlides;
+      })) || [];
       
-      // 브랜드 배너 설정 (로고와 배경 이미지 활용)
-      const brandBanner = showBackground !== false && backgroundImage ? {
+      // 브랜드 배너 설정 (배경 이미지가 있으면 표시)
+      const brandBanner = showBackground && backgroundImage ? {
         id: 1,
         title: sliderTitle || "이벤트",
-        brandLogo: logoImage || "/images/brand/new-balance.png",
+        brandLogo: logoImage || "",
         eventImage: backgroundImage,
         link: buttonLink || "/brand/1",
         showButton: showButton !== false,
         buttonText: buttonText || '더 보러가기',
         buttonBorderColor,
-        buttonTextColor
-      } : defaultData.brandBanner;
+        buttonTextColor,
+        showLogo: showLogo !== false && !!logoImage
+      } : null;
       
       data = {
-        topBannerImage: topBanner || defaultData.topBannerImage,
-        topBannerAlt: topAlt || defaultData.topBannerAlt,
-        brandBanner: brandBanner as BrandBanner,
+        brandBanner: brandBanner as BrandBanner | null,
         marketingSlides
       };
     }
@@ -184,12 +142,8 @@ function MobileBannerSection(props: ComponentSkinProps | MobileBannerSectionProp
     // 기존 props 형식 사용
     const legacyProps = props as MobileBannerSectionProps;
     data = {
-      topBannerImage: legacyProps.topBannerImage || defaultData.topBannerImage,
-      topBannerAlt: legacyProps.topBannerAlt || defaultData.topBannerAlt,
-      brandBanner: legacyProps.brandBanner || defaultData.brandBanner,
-      marketingSlides: legacyProps.marketingSlides && legacyProps.marketingSlides.length > 0 
-        ? legacyProps.marketingSlides 
-        : defaultData.marketingSlides
+      brandBanner: legacyProps.brandBanner || null,
+      marketingSlides: legacyProps.marketingSlides || []
     };
   }
 
@@ -262,17 +216,8 @@ function MobileBannerSection(props: ComponentSkinProps | MobileBannerSectionProp
   return (
     <div className="">
       <div>
-        {/* 상단 배너 섹션 */}
+        {/* 브랜드 이벤트 배너 섹션 */}
         <div className="poj2-img-title-banner relative">
-          {/* 상단 이미지 배너 */}
-          <div className="mb-4">
-            <img 
-              alt={data.topBannerAlt}
-              className="w-full h-auto" 
-              src={data.topBannerImage}
-            />
-          </div>
-
           {/* 브랜드 이벤트 배너 */}
           {data.brandBanner && (
             <a 
@@ -288,11 +233,13 @@ function MobileBannerSection(props: ComponentSkinProps | MobileBannerSectionProp
               />
               <div className="absolute bottom-0 left-0 w-full h-full bg-[linear-gradient(to_bottom,rgba(0,0,0,0)_,rgba(0,0,0,1)_100%)]"></div>
               <div className="absolute bottom-0 left-0 right-0 px-4 py-6 space-y-3">
-                <img 
-                  alt="이벤트 이미지" 
-                  className="h-10" 
-                  src={data.brandBanner.brandLogo}
-                />
+                {(data.brandBanner as any).showLogo !== false && data.brandBanner.brandLogo && (
+                  <img 
+                    alt="이벤트 이미지" 
+                    className="h-10" 
+                    src={data.brandBanner.brandLogo}
+                  />
+                )}
                 <div>
                   {/* 조건부 버튼 렌더링 */}
                   {(data.brandBanner as any).showButton !== false && (
@@ -389,12 +336,10 @@ export default function Poj2MobileBannerSection(props?: ComponentSkinProps | Mob
   const legacyProps = props as MobileBannerSectionProps;
   const convertedProps: ComponentSkinProps = {
     data: {
-      topBannerImage: legacyProps.topBannerImage,
-      topBannerAlt: legacyProps.topBannerAlt,
       backgroundImage: legacyProps.brandBanner?.eventImage,
       logoImage: legacyProps.brandBanner?.brandLogo,
-      showBackground: true,
-      showLogo: true,
+      showBackground: !!legacyProps.brandBanner?.eventImage,
+      showLogo: !!legacyProps.brandBanner?.brandLogo,
       showButton: true,
       buttonText: '더 보러가기',
       buttonLink: legacyProps.brandBanner?.link,
