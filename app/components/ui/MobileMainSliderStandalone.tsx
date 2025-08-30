@@ -3,24 +3,77 @@ import { useState, useRef, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';
 
-interface Slider {
-  content: string;
-  path: string;
-  image: string;
-  badges: string[];
+interface Banner {
+  text: string;
+  description?: string;
+  url: string;
+  icon: string;
+  mediaType?: string;
+  videoUrl?: string;
+  autoplay?: boolean;
+  muted?: boolean;
+  loop?: boolean;
+  position?: string;
+  hasBackground?: boolean;
+  textColor?: string;
+  textShadow?: string;
+  buttonBgColor?: string;
+  buttonTextColor?: string;
+  buttonHoverColor?: string;
+  buttonText?: string;
+  transparentButton?: boolean;
+  buttonWidth?: string;
+  buttonHeight?: string;
+  showTitle?: boolean;
+  showButton?: boolean;
+  showAd?: boolean;
+  adImageUrl?: string;
+  adText?: string;
+  adLink?: string;
+  adPosition?: string;
+  adPositionPc?: string;
+  adPositionMobile?: string;
+  adTextColor?: string;
+  adBackgroundColor?: string;
+  adBorderColor?: string;
+  adOpacity?: number;
+  showCategory?: boolean;
+  categories?: string[];
+  categoryPosition?: string;
+  categoryPositionPc?: string;
+  categoryPositionMobile?: string;
+  categoryTextColor?: string;
+  categoryBackgroundColor?: string;
+  categoryBorderColor?: string;
+  categoryFontSize?: string;
+  categoryBorderRadius?: string;
 }
 
-export interface MobileMainSliderProps {
-  data?: Slider[];
-  onSlideClick?: (slide: Slider) => void;
+interface WithCookieProps {
+  deviceProperty?: {
+    pc?: {
+      banners?: Banner[];
+      skin?: string;
+    };
+    mobile?: {
+      banners?: Banner[];
+      skin?: string;
+    };
+  };
+  banners?: Banner[];
+  skin?: string;
+}
+
+export interface MobileMainSliderProps extends WithCookieProps {
+  onSlideClick?: (slide: Banner) => void;
 }
 
 // 인라인 모달 컴포넌트
 interface MobileMainSliderModalProps {
   isOpen: boolean;
   onClose: () => void;
-  data: Slider[];
-  onItemClick?: (slide: Slider) => void;
+  data: Banner[];
+  onItemClick?: (slide: Banner) => void;
 }
 
 function MobileMainSliderModal({ isOpen, onClose, data, onItemClick }: MobileMainSliderModalProps) {
@@ -42,7 +95,7 @@ function MobileMainSliderModal({ isOpen, onClose, data, onItemClick }: MobileMai
   // 데이터 유효성 검증
   const validData = Array.isArray(data) ? data : [];
 
-  const handleItemClick = (item: Slider, e: React.MouseEvent) => {
+  const handleItemClick = (item: Banner, e: React.MouseEvent) => {
     e.preventDefault();
     if (onItemClick) {
       onItemClick(item);
@@ -84,16 +137,16 @@ function MobileMainSliderModal({ isOpen, onClose, data, onItemClick }: MobileMai
         <div className="grid grid-cols-2 gap-x-4 gap-y-6 pb-4">
           {validData.map((item, idx) => (
             <a
-              key={item.content + idx}
-              href={item.path}
+              key={item.text + idx}
+              href={item.url}
               className="block bg-white rounded overflow-hidden"
               onClick={(e) => handleItemClick(item, e)}
             >
               {/* 이미지 */}
               <div className="aspect-square overflow-hidden">
                 <img
-                  src={item.image}
-                  alt={item.content}
+                  src={item.icon}
+                  alt={item.text}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -101,19 +154,29 @@ function MobileMainSliderModal({ isOpen, onClose, data, onItemClick }: MobileMai
               {/* 텍스트 영역 */}
               <div className="mt-[8px]">
                 {/* 제목 */}
-                <h3 className="text-sm font-bold line-clamp-2 leading-tight">{item.content}</h3>
+                <h3 className="text-sm font-bold line-clamp-2 leading-tight">
+                  {item.text.replace(/\\n/g, ' ')}
+                </h3>
 
-                {/* 배지들 */}
-                <div className="flex flex-wrap gap-1 mt-0.5">
-                  {Array.isArray(item.badges) && item.badges.map((badge, index) => (
-                    <span
-                      className="inline-block font-medium text-xs"
-                      key={index}
-                    >
-                      {badge}
-                    </span>
-                  ))}
-                </div>
+                {/* 카테고리 배지들 */}
+                {item.showCategory && item.categories && (
+                  <div className="flex flex-wrap gap-1 mt-0.5">
+                    {item.categories.map((category, index) => (
+                      <span
+                        className="inline-block font-medium text-xs px-2 py-0.5 rounded"
+                        key={index}
+                        style={{
+                          color: item.categoryTextColor || '#000',
+                          backgroundColor: item.categoryBackgroundColor || '#f0f0f0',
+                          borderRadius: item.categoryBorderRadius || '4px',
+                          fontSize: item.categoryFontSize || '12px'
+                        }}
+                      >
+                        {category}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
             </a>
           ))}
@@ -124,45 +187,182 @@ function MobileMainSliderModal({ isOpen, onClose, data, onItemClick }: MobileMai
 }
 
 // 기본 데이터
-const defaultData: Slider[] = [
+const defaultData: Banner[] = [
   {
-    content: '새로운 컬렉션 출시',
-    path: '#',
-    image: 'https://via.placeholder.com/400x400',
-    badges: ['신상품', '특가']
+    text: '새로운 컬렉션 출시',
+    url: '#',
+    icon: 'https://via.placeholder.com/400x400',
+    showCategory: true,
+    categories: ['신상품', '특가'],
+    categoryTextColor: '#ffffff',
+    categoryBackgroundColor: '#000000',
+    showButton: true,
+    buttonText: '자세히 보기',
+    buttonBgColor: '#000000',
+    buttonTextColor: '#ffffff',
+    showTitle: true
   },
   {
-    content: '봄 시즌 특별 할인',
-    path: '#',
-    image: 'https://via.placeholder.com/400x400',
-    badges: ['50% 할인', '한정판매']
+    text: '봄 시즌 특별 할인',
+    url: '#',
+    icon: 'https://via.placeholder.com/400x400',
+    showCategory: true,
+    categories: ['50% 할인', '한정판매'],
+    categoryTextColor: '#ffffff',
+    categoryBackgroundColor: '#ff0000',
+    showButton: true,
+    buttonText: '자세히 보기',
+    buttonBgColor: '#000000',
+    buttonTextColor: '#ffffff',
+    showTitle: true
   },
   {
-    content: '프리미엄 라인업',
-    path: '#',
-    image: 'https://via.placeholder.com/400x400',
-    badges: ['프리미엄', '럭셔리']
+    text: '프리미엄 라인업',
+    url: '#',
+    icon: 'https://via.placeholder.com/400x400',
+    showCategory: true,
+    categories: ['프리미엄', '럭셔리'],
+    categoryTextColor: '#ffffff',
+    categoryBackgroundColor: '#800080',
+    showButton: true,
+    buttonText: '자세히 보기',
+    buttonBgColor: '#000000',
+    buttonTextColor: '#ffffff',
+    showTitle: true
   }
 ];
 
-export default function MobileMainSliderStandalone({
-  data = defaultData,
-  onSlideClick
-}: MobileMainSliderProps) {
+// 웹빌더 초기화 지원 (필요한 경우만 사용)
+if (typeof window !== 'undefined') {
+  // 수동 초기화가 필요한 경우를 위한 함수
+  (window as any).initMobileMainSlider = function(containerId: string, customProps?: any) {
+    const container = document.getElementById(containerId);
+    if (container && typeof (window as any).React !== 'undefined' && typeof (window as any).ReactDOM !== 'undefined') {
+      const React = (window as any).React;
+      const ReactDOM = (window as any).ReactDOM;
+      
+      console.log('[WithCookie] Manual initialization with props:', customProps);
+      
+      const element = React.createElement(MobileMainSliderStandalone, customProps || {});
+      ReactDOM.render(element, container);
+      return true;
+    }
+    console.error('[WithCookie] Failed to initialize - React or container not found');
+    return false;
+  };
+}
+
+function MobileMainSlider(props: MobileMainSliderProps) {
+  const { onSlideClick } = props;
+  
+  // props 구조 디버깅
+  console.log('[MobileMainSlider] Raw props:', props);
+  console.log('[MobileMainSlider] Props structure:', {
+    hasData: !!(props as any)?.data,
+    hasDeviceProperty: !!props.deviceProperty,
+    hasBanners: !!props.banners,
+    dataContent: (props as any)?.data?.content,
+    dataComponentProps: (props as any)?.data?.componentProps
+  });
+
+  // 웹빌더에서 오는 중첩된 구조 처리
+  const mergedProps = React.useMemo(() => {
+    // 1. 직접 전달된 props 확인 (정상적인 구조)
+    if (props && (props.banners || props.deviceProperty)) {
+      console.log('[MobileMainSlider] Using direct props');
+      return props;
+    }
+
+    // 2. 웹빌더의 중첩된 구조 처리 (data.content 또는 data.componentProps에서 찾기)
+    const dataWrapper = (props as any)?.data;
+    if (dataWrapper) {
+      // content에서 먼저 확인
+      if (dataWrapper.content) {
+        const content = dataWrapper.content;
+        if (content.deviceProperty || content.banners) {
+          console.log('[MobileMainSlider] Using data.content:', content);
+          return {
+            deviceProperty: content.deviceProperty,
+            banners: content.banners,
+            skin: dataWrapper.componentProps?.skin || content.skin
+          };
+        }
+      }
+
+      // componentProps에서 확인
+      if (dataWrapper.componentProps) {
+        const componentProps = dataWrapper.componentProps;
+        if (componentProps.deviceProperty || componentProps.banners) {
+          console.log('[MobileMainSlider] Using data.componentProps:', componentProps);
+          return {
+            deviceProperty: componentProps.deviceProperty,
+            banners: componentProps.banners,
+            skin: componentProps.skin
+          };
+        }
+      }
+
+      // data 자체에 직접 있는지 확인
+      if (dataWrapper.deviceProperty || dataWrapper.banners) {
+        console.log('[MobileMainSlider] Using data directly:', dataWrapper);
+        return {
+          deviceProperty: dataWrapper.deviceProperty,
+          banners: dataWrapper.banners,
+          skin: dataWrapper.skin
+        };
+      }
+    }
+
+    // 3. window.editorProps 폴백
+    if (typeof window !== 'undefined') {
+      const windowProps = (window as any).editorProps ||
+                         (window as any).__withCookieProps;
+      if (windowProps) {
+        console.log('[MobileMainSlider] Using window props as fallback');
+        return windowProps;
+      }
+    }
+
+    console.log('[MobileMainSlider] No valid props found, using empty object');
+    return {};
+  }, [props]);
+
+  // 배너 데이터 추출
+  const bannersData = React.useMemo(() => {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+    
+    // deviceProperty 체크
+    if (mergedProps.deviceProperty) {
+      if (isMobile && mergedProps.deviceProperty.mobile?.banners) {
+        return mergedProps.deviceProperty.mobile.banners;
+      }
+      if (mergedProps.deviceProperty.pc?.banners) {
+        return mergedProps.deviceProperty.pc.banners;
+      }
+    }
+    
+    // 직접 banners 체크
+    if (mergedProps.banners && Array.isArray(mergedProps.banners)) {
+      return mergedProps.banners;
+    }
+    
+    return defaultData;
+  }, [mergedProps]);
+
   // 데이터 유효성 검증 및 정규화
   const normalizedData = React.useMemo(() => {
-    if (!data) return defaultData;
-    if (!Array.isArray(data)) return defaultData;
-    if (data.length === 0) return defaultData;
+    if (!bannersData || !Array.isArray(bannersData) || bannersData.length === 0) {
+      return defaultData;
+    }
 
-    // 각 아이템의 구조 검증
-    return data.map(item => ({
-      content: item?.content || '',
-      path: item?.path || '#',
-      image: item?.image || 'https://via.placeholder.com/400x400',
-      badges: Array.isArray(item?.badges) ? item.badges : []
+    // 각 아이템의 구조 검증 및 변환
+    return bannersData.filter(item => item && item.icon).map(item => ({
+      ...item,
+      text: item.text || '',
+      url: item.url || '#',
+      icon: item.icon || 'https://via.placeholder.com/400x400'
     }));
-  }, [data]);
+  }, [bannersData]);
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -221,14 +421,14 @@ export default function MobileMainSliderStandalone({
     }
   }, []);
 
-  const handleSlideClick = (slide: Slider, e: React.MouseEvent) => {
+  const handleSlideClick = (slide: Banner, e: React.MouseEvent) => {
     e.preventDefault();
     if (onSlideClick) {
       onSlideClick(slide);
     }
   };
 
-  const handleCtaClick = (slide: Slider, e: React.MouseEvent) => {
+  const handleCtaClick = (slide: Banner, e: React.MouseEvent) => {
     e.preventDefault();
     if (onSlideClick) {
       onSlideClick(slide);
@@ -256,20 +456,32 @@ export default function MobileMainSliderStandalone({
       >
         {normalizedData.map((slide, idx) => (
           <SwiperSlide
-            key={slide.content + idx}
+            key={slide.text + idx}
             className="!w-full"
           >
-            <div className="w-full h-[390px] overflow-hidden">
+            <div className="w-full h-[390px] overflow-hidden relative">
               <a
                 className="w-full h-full block"
-                href={slide.path}
+                href={slide.url}
                 onClick={(e) => handleSlideClick(slide, e)}
               >
                 <img
-                  src={slide.image}
-                  alt={slide.content}
+                  src={slide.icon}
+                  alt={slide.text}
                   className="w-full h-full object-cover"
                 />
+                {/* 광고 표시 */}
+                {slide.showAd && slide.adText && (
+                  <div 
+                    className="absolute top-4 right-4 px-2 py-1 text-xs rounded"
+                    style={{
+                      color: slide.adTextColor || '#ffffff',
+                      backgroundColor: slide.adBackgroundColor || 'rgba(0,0,0,0.5)'
+                    }}
+                  >
+                    {slide.adText}
+                  </div>
+                )}
               </a>
             </div>
           </SwiperSlide>
@@ -280,28 +492,54 @@ export default function MobileMainSliderStandalone({
         <div className="absolute bottom-[63%] left-0 right-0 h-[140px] bg-gradient-to-t from-white to-transparent"></div>
         {/* 제목 */}
         <div className="relative -mt-[50px] text-center mb-3">
-          <a
-            ref={titleTextRef}
-            href={currentSlideData?.path || '#'}
-            className="block px-15 text-2xl font-bold text-center leading-tight"
-            onClick={(e) => handleSlideClick(currentSlideData, e)}
-          >
-            {currentSlideData?.content || ''}
-          </a>
+          {currentSlideData?.showTitle !== false && (
+            <a
+              ref={titleTextRef}
+              href={currentSlideData?.url || '#'}
+              className="block px-15 text-2xl font-bold text-center leading-tight"
+              style={{
+                color: currentSlideData?.textColor || '#000000',
+                textShadow: currentSlideData?.textShadow || 'none'
+              }}
+              onClick={(e) => handleSlideClick(currentSlideData, e)}
+            >
+              {currentSlideData?.text?.replace(/\\n/g, ' ') || ''}
+            </a>
+          )}
         </div>
 
         {/* CTA 버튼 */}
-        <div className="text-center mb-3">
-          <a
-            href={currentSlideData?.path || '#'}
-            className="inline-block bg-black text-white px-8 py-2 rounded-full font-bold text-sm"
-            onClick={(e) => handleCtaClick(currentSlideData, e)}
-          >
-            <span ref={ctaTextRef}>
-              {Array.isArray(currentSlideData?.badges) ? currentSlideData.badges.join(' ') : ''}
-            </span>
-          </a>
-        </div>
+        {currentSlideData?.showButton !== false && (
+          <div className="text-center mb-3">
+            <a
+              href={currentSlideData?.url || '#'}
+              className="inline-block px-8 py-2 rounded-full font-bold text-sm transition-colors"
+              style={{
+                backgroundColor: currentSlideData?.transparentButton ? 'transparent' : (currentSlideData?.buttonBgColor || '#000000'),
+                color: currentSlideData?.buttonTextColor || '#ffffff',
+                border: currentSlideData?.transparentButton ? `2px solid ${currentSlideData?.buttonBgColor || '#000000'}` : 'none',
+                width: currentSlideData?.buttonWidth || 'auto',
+                height: currentSlideData?.buttonHeight || 'auto'
+              }}
+              onMouseEnter={(e) => {
+                if (currentSlideData?.buttonHoverColor) {
+                  e.currentTarget.style.backgroundColor = currentSlideData.buttonHoverColor;
+                }
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = currentSlideData?.transparentButton ? 'transparent' : (currentSlideData?.buttonBgColor || '#000000');
+              }}
+              onClick={(e) => handleCtaClick(currentSlideData, e)}
+            >
+              <span ref={ctaTextRef}>
+                {currentSlideData?.buttonText || 
+                 (currentSlideData?.showCategory && currentSlideData?.categories ? 
+                  currentSlideData.categories.join(' ') : 
+                  '자세히 보기')}
+              </span>
+            </a>
+          </div>
+        )}
 
         {/* 페이지네이션 및 전체보기 */}
         <div className="flex items-center justify-center gap-2 text-xs text-description">
@@ -338,4 +576,19 @@ export default function MobileMainSliderStandalone({
       />
     </div>
   );
+}
+
+// 웹빌더 호환성을 위한 래퍼 컴포넌트
+export default function MobileMainSliderStandalone(props?: MobileMainSliderProps) {
+  // props가 전달되면 사용, 없으면 빈 객체
+  const finalProps = props || {};
+  
+  console.log('[MobileMainSliderStandalone] Received props:', finalProps);
+  
+  return <MobileMainSlider {...finalProps} />;
+}
+
+// 컴포넌트를 글로벌로도 노출 (웹빌더가 직접 접근 가능)
+if (typeof window !== 'undefined') {
+  (window as any).MobileMainSliderComponent = MobileMainSlider;
 }
