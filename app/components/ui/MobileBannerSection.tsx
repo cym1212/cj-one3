@@ -214,7 +214,7 @@ function MobileBannerSection(props: ComponentSkinProps | MobileBannerSectionProp
   }
 
   return (
-    <div className="">
+    <div className="lg:hidden">
       <div>
         {/* 브랜드 이벤트 배너 섹션 */}
         <div className="poj2-img-title-banner relative">
@@ -261,7 +261,7 @@ function MobileBannerSection(props: ComponentSkinProps | MobileBannerSectionProp
         </div>
 
         {/* 마케팅 슬라이더 섹션 */}
-        <div className="relative w-full h-[250px] overflow-hidden">
+        <div className="relative w-full overflow-hidden">
           {/* 배경 레이어 */}
           <div className="absolute inset-0">
             <div className="w-full h-[180px] bg-black"></div>
@@ -269,11 +269,12 @@ function MobileBannerSection(props: ComponentSkinProps | MobileBannerSectionProp
           </div>
 
           {/* 슬라이더 컨테이너 */}
-          <div className="relative h-full">
+          <div className="relative pt-4 pb-12">
             <Swiper
               modules={[Autoplay]}
               spaceBetween={10}
               slidesPerView="auto"
+              centeredSlides={false}
               onSwiper={setSwiper}
               onSlideChange={(swiper) => {
                 setCurrentSlide(swiper.activeIndex + 1);
@@ -282,12 +283,12 @@ function MobileBannerSection(props: ComponentSkinProps | MobileBannerSectionProp
                 delay: 3000,
                 disableOnInteraction: false,
               }}
-              className="h-full !px-4"
+              className="!px-4"
             >
               {data.marketingSlides?.map((slide) => (
                 <SwiperSlide key={slide.id} className="!w-[280px]">
                   <div 
-                    className="relative w-[280px] h-[205px] mx-auto cursor-pointer"
+                    className="relative w-[280px] h-[180px] cursor-pointer"
                     onClick={(e) => handleProductClick(slide, e)}
                   >
                     <img 
