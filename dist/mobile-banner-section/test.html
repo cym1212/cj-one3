@@ -57,8 +57,8 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     
     <script>
-        // 테스트 데이터 (회색 이미지 placeholder)
-        const testData = {
+        // 기존 형식 테스트 데이터 (하위 호환성 테스트)
+        const legacyTestData = {
             topBannerImage: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='100'%3E%3Crect width='400' height='100' fill='%23e5e7eb'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%236b7280' font-family='Arial' font-size='14'%3E오늘 혜택이 가장 좋아요%3C/text%3E%3C/svg%3E",
             topBannerAlt: "오늘 혜택이 가장 좋아요",
             brandBanner: {
@@ -96,6 +96,89 @@
                 }
             ]
         };
+        
+        // ComponentSkinProps 형식 테스트 데이터 (새로운 형식)
+        const componentSkinPropsData = {
+            data: {
+                // 상단 배너
+                topBannerImage: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='100'%3E%3Crect width='400' height='100' fill='%23fbbf24'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23000000' font-family='Arial' font-size='14'%3E상단 배너 (ComponentSkinProps)%3C/text%3E%3C/svg%3E",
+                topBannerAlt: "ComponentSkinProps 형식 테스트",
+                
+                // 배경 및 로고
+                backgroundImage: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='195'%3E%3Crect width='400' height='195' fill='%2310b981'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ffffff' font-family='Arial' font-size='16'%3E배경 이미지%3C/text%3E%3C/svg%3E",
+                logoImage: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='40'%3E%3Crect width='120' height='40' fill='%23ffffff'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23000000' font-family='Arial' font-size='12'%3ELOGO%3C/text%3E%3C/svg%3E",
+                showBackground: true,
+                showLogo: true,
+                
+                // 버튼 설정
+                showButton: true,
+                buttonText: "클릭하세요",
+                buttonLink: "/products",
+                buttonBorderColor: "#ffffff",
+                buttonTextColor: "#ffffff",
+                
+                // 슬라이더 설정
+                sliderTitle: "특별 이벤트",
+                showTitle: true,
+                
+                // 상품 데이터
+                allProducts: [
+                    {
+                        id: 101,
+                        title: "상품 1",
+                        name: "Product 1",
+                        image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='205'%3E%3Crect width='280' height='205' fill='%23ef4444'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ffffff' font-family='Arial' font-size='14'%3E상품 1%3C/text%3E%3C/svg%3E"
+                    },
+                    {
+                        id: 102,
+                        title: "상품 2",
+                        name: "Product 2",
+                        image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='205'%3E%3Crect width='280' height='205' fill='%233b82f6'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ffffff' font-family='Arial' font-size='14'%3E상품 2%3C/text%3E%3C/svg%3E"
+                    },
+                    {
+                        id: 103,
+                        title: "상품 3",
+                        name: "Product 3",
+                        image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='205'%3E%3Crect width='280' height='205' fill='%23a855f7'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ffffff' font-family='Arial' font-size='14'%3E상품 3%3C/text%3E%3C/svg%3E"
+                    },
+                    {
+                        id: 104,
+                        title: "상품 4",
+                        name: "Product 4",
+                        image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='205'%3E%3Crect width='280' height='205' fill='%2314b8a6'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ffffff' font-family='Arial' font-size='14'%3E상품 4%3C/text%3E%3C/svg%3E"
+                    },
+                    {
+                        id: 105,
+                        title: "상품 5",
+                        name: "Product 5",
+                        image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='205'%3E%3Crect width='280' height='205' fill='%23f59e0b'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ffffff' font-family='Arial' font-size='14'%3E상품 5%3C/text%3E%3C/svg%3E"
+                    }
+                ],
+                loading: false
+            },
+            actions: {
+                handleProductClick: (product) => {
+                    console.log('상품 클릭:', product);
+                    alert(`상품 클릭: ${product.title}`);
+                },
+                handleButtonClick: (link) => {
+                    console.log('버튼 클릭:', link);
+                    alert(`버튼 클릭: ${link}`);
+                }
+            },
+            utils: {
+                t: (key) => key,
+                navigate: (path) => {
+                    console.log('Navigate to:', path);
+                },
+                formatCurrency: (amount) => `₩${amount.toLocaleString()}`
+            },
+            mode: 'preview'
+        };
+        
+        // 사용할 테스트 데이터 선택 (기본값: ComponentSkinProps 형식)
+        const useComponentSkinProps = true; // false로 변경하면 기존 형식 테스트
+        const testData = useComponentSkinProps ? componentSkinPropsData : legacyTestData;
         
         // DOM이 로드된 후 실행
         document.addEventListener('DOMContentLoaded', function() {

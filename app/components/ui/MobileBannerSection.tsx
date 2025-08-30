@@ -11,6 +11,20 @@ const ArrowRightIcon = () => (
   </svg>
 );
 
+// ComponentSkinProps 타입 정의
+interface ComponentSkinProps {
+  data: any;
+  actions: any;
+  options?: Record<string, any>;
+  mode?: 'editor' | 'preview' | 'production';
+  utils?: {
+    t: (key: string) => string;
+    navigate: (path: string) => void;
+    formatCurrency: (amount: number) => string;
+  };
+}
+
+// 기존 인터페이스 (하위 호환성)
 interface MarketingSlide {
   id: number;
   title: string;
@@ -34,7 +48,7 @@ export interface MobileBannerSectionProps {
 }
 
 // 기본 데이터
-const defaultData: MobileBannerSectionProps = {
+const defaultData = {
   topBannerImage: "/images/banner/benefit-m.png",
   topBannerAlt: "오늘 혜택이 가장 좋아요",
   brandBanner: {
@@ -73,19 +87,111 @@ const defaultData: MobileBannerSectionProps = {
   ]
 };
 
-function MobileBannerSection(props: MobileBannerSectionProps) {
+function MobileBannerSection(props: ComponentSkinProps | MobileBannerSectionProps) {
   const [currentSlide, setCurrentSlide] = useState(1);
   const [swiper, setSwiper] = useState<SwiperType | null>(null);
 
-  // props와 기본값 병합
-  const data = {
-    topBannerImage: props.topBannerImage || defaultData.topBannerImage,
-    topBannerAlt: props.topBannerAlt || defaultData.topBannerAlt,
-    brandBanner: props.brandBanner || defaultData.brandBanner,
-    marketingSlides: props.marketingSlides && props.marketingSlides.length > 0 
-      ? props.marketingSlides 
-      : defaultData.marketingSlides
+  // ComponentSkinProps 형식인지 확인
+  const isComponentSkinProps = 'data' in props && 'actions' in props;
+  
+  let data: {
+    topBannerImage?: string;
+    topBannerAlt?: string;
+    brandBanner?: BrandBanner;
+    marketingSlides?: MarketingSlide[];
   };
+  
+  let actions: any = {};
+  let utils: any = { t: (key: string) => key };
+  
+  if (isComponentSkinProps) {
+    const skinProps = props as ComponentSkinProps;
+    const { t = (key: string) => key } = skinProps.utils || {};
+    utils = skinProps.utils || utils;
+    actions = skinProps.actions || {};
+    
+    // ProductSlider data에서 필요한 속성 추출
+    const {
+      // 배경 관련
+      backgroundImage,
+      showBackground,
+      overlayGradient,
+      overlayOpacity,
+      
+      // 로고 관련
+      logoImage,
+      showLogo,
+      logoHeight,
+      logoPosition,
+      
+      // 버튼 관련
+      showButton,
+      buttonText,
+      buttonLink,
+      buttonBorderColor,
+      buttonTextColor,
+      
+      // 상품 데이터
+      allProducts,
+      loading,
+      
+      // 슬라이더 설정
+      sliderTitle,
+      showTitle,
+      
+      // 상단 배너
+      topBannerImage: topBanner,
+      topBannerAlt: topAlt,
+      
+      // 스타일
+      containerStyle,
+      titleStyle
+    } = skinProps.data || {};
+    
+    // 로딩 상태 처리
+    if (loading) {
+      data = defaultData;
+    } else {
+      // 상품 데이터를 마케팅 슬라이드 형식으로 변환
+      const marketingSlides = allProducts?.slice(0, 5).map((product: any, index: number) => ({
+        id: product.id || index,
+        title: product.title || product.name || '상품명',
+        image: product.image || product.config?.img_url || '/images/banner/marketing-slide-1.jpg',
+        link: `/products/${product.id}`
+      })) || defaultData.marketingSlides;
+      
+      // 브랜드 배너 설정 (로고와 배경 이미지 활용)
+      const brandBanner = showBackground !== false && backgroundImage ? {
+        id: 1,
+        title: sliderTitle || "이벤트",
+        brandLogo: logoImage || "/images/brand/new-balance.png",
+        eventImage: backgroundImage,
+        link: buttonLink || "/brand/1",
+        showButton: showButton !== false,
+        buttonText: buttonText || '더 보러가기',
+        buttonBorderColor,
+        buttonTextColor
+      } : defaultData.brandBanner;
+      
+      data = {
+        topBannerImage: topBanner || defaultData.topBannerImage,
+        topBannerAlt: topAlt || defaultData.topBannerAlt,
+        brandBanner: brandBanner as BrandBanner,
+        marketingSlides
+      };
+    }
+  } else {
+    // 기존 props 형식 사용
+    const legacyProps = props as MobileBannerSectionProps;
+    data = {
+      topBannerImage: legacyProps.topBannerImage || defaultData.topBannerImage,
+      topBannerAlt: legacyProps.topBannerAlt || defaultData.topBannerAlt,
+      brandBanner: legacyProps.brandBanner || defaultData.brandBanner,
+      marketingSlides: legacyProps.marketingSlides && legacyProps.marketingSlides.length > 0 
+        ? legacyProps.marketingSlides 
+        : defaultData.marketingSlides
+    };
+  }
 
   // Tailwind CSS CDN 자동 로드
   useEffect(() => {
@@ -121,8 +227,37 @@ function MobileBannerSection(props: MobileBannerSectionProps) {
     }
   }, []);
 
+  // 상품 클릭 처리
+  const handleProductClick = (product: any, e: React.MouseEvent) => {
+    e.preventDefault();
+    if (actions?.handleProductClick) {
+      actions.handleProductClick(product);
+    } else if (utils?.navigate && product.link) {
+      utils.navigate(product.link);
+    }
+  };
+
+  // 버튼 클릭 처리
+  const handleButtonClick = (link: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    if (actions?.handleButtonClick) {
+      actions.handleButtonClick(link);
+    } else if (utils?.navigate) {
+      utils.navigate(link);
+    }
+  };
+
   const totalSlides = data.marketingSlides?.length || 0;
   const progressPercentage = totalSlides > 0 ? (currentSlide / totalSlides) * 100 : 0;
+
+  // 로딩 상태 처리 (ComponentSkinProps인 경우)
+  if (isComponentSkinProps && (props as ComponentSkinProps).data?.loading) {
+    return (
+      <div className="flex justify-center items-center h-64 bg-gray-100">
+        <div className="text-gray-500">로딩 중...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="">
@@ -143,6 +278,7 @@ function MobileBannerSection(props: MobileBannerSectionProps) {
             <a 
               className="relative block" 
               href={data.brandBanner.link}
+              onClick={(e) => handleButtonClick(data.brandBanner!.link, e)}
               data-discover="true"
             >
               <img 
@@ -158,10 +294,19 @@ function MobileBannerSection(props: MobileBannerSectionProps) {
                   src={data.brandBanner.brandLogo}
                 />
                 <div>
-                  <button className="flex items-center bg-transparent border border-white text-white pl-3 pr-1.5 py-0.5 rounded-full text-xs">
-                    <span>더 보러가기</span>
-                    <ArrowRightIcon />
-                  </button>
+                  {/* 조건부 버튼 렌더링 */}
+                  {(data.brandBanner as any).showButton !== false && (
+                    <button 
+                      className="flex items-center bg-transparent border border-white text-white pl-3 pr-1.5 py-0.5 rounded-full text-xs"
+                      style={{
+                        borderColor: (data.brandBanner as any).buttonBorderColor || 'white',
+                        color: (data.brandBanner as any).buttonTextColor || 'white'
+                      }}
+                    >
+                      <span>{(data.brandBanner as any).buttonText || '더 보러가기'}</span>
+                      <ArrowRightIcon />
+                    </button>
+                  )}
                 </div>
               </div>
             </a>
@@ -194,7 +339,10 @@ function MobileBannerSection(props: MobileBannerSectionProps) {
             >
               {data.marketingSlides?.map((slide) => (
                 <SwiperSlide key={slide.id} className="!w-[280px]">
-                  <div className="relative w-[280px] h-[205px] mx-auto">
+                  <div 
+                    className="relative w-[280px] h-[205px] mx-auto cursor-pointer"
+                    onClick={(e) => handleProductClick(slide, e)}
+                  >
                     <img 
                       alt={slide.title}
                       className="w-full h-full object-cover rounded" 
@@ -226,13 +374,52 @@ function MobileBannerSection(props: MobileBannerSectionProps) {
 }
 
 // 웹빌더 호환성을 위한 래퍼 컴포넌트
-export default function MobileBannerSectionStandalone(props?: MobileBannerSectionProps) {
-  const finalProps = props || {};
-  return <MobileBannerSection {...finalProps} />;
+export default function Poj2MobileBannerSection(props?: ComponentSkinProps | MobileBannerSectionProps) {
+  // props가 없으면 기본값 사용
+  if (!props) {
+    return <MobileBannerSection {...defaultData as MobileBannerSectionProps} />;
+  }
+
+  // ComponentSkinProps 형식인지 확인
+  if ('data' in props && 'actions' in props) {
+    return <MobileBannerSection {...props as ComponentSkinProps} />;
+  }
+
+  // 기존 props 형식 지원 (하위 호환성)
+  const legacyProps = props as MobileBannerSectionProps;
+  const convertedProps: ComponentSkinProps = {
+    data: {
+      topBannerImage: legacyProps.topBannerImage,
+      topBannerAlt: legacyProps.topBannerAlt,
+      backgroundImage: legacyProps.brandBanner?.eventImage,
+      logoImage: legacyProps.brandBanner?.brandLogo,
+      showBackground: true,
+      showLogo: true,
+      showButton: true,
+      buttonText: '더 보러가기',
+      buttonLink: legacyProps.brandBanner?.link,
+      sliderTitle: legacyProps.brandBanner?.title,
+      allProducts: legacyProps.marketingSlides?.map(slide => ({
+        id: slide.id,
+        title: slide.title,
+        name: slide.title,
+        image: slide.image,
+        config: { img_url: slide.image }
+      }))
+    },
+    actions: {},
+    utils: { 
+      t: (key: string) => key,
+      navigate: (path: string) => console.log('Navigate to:', path),
+      formatCurrency: (amount: number) => `₩${amount.toLocaleString()}`
+    }
+  };
+
+  return <MobileBannerSection {...convertedProps} />;
 }
 
 // 컴포넌트를 글로벌로도 노출 (웹빌더가 직접 접근 가능)
 if (typeof window !== 'undefined') {
   (window as any).MobileBannerSectionComponent = MobileBannerSection;
-  (window as any).Poj2MobileBannerSection = MobileBannerSectionStandalone;
+  (window as any).Poj2MobileBannerSection = Poj2MobileBannerSection;
 }
