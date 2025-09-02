@@ -102,7 +102,19 @@ const Signup = (props: any) => {
             email: '',
             email_domain: '직접입력',
             referral_code: '',
-            referral_code_from_url: false
+            referral_code_from_url: false,
+            
+            // var 필드 추가 (체크박스용)
+            var1: false,  // 이용약관 동의
+            var2: false,  // 개인정보수집 및 이용 동의
+            var3: false,  // 개인 맞춤형 서비스 활용 동의
+            var4: false,  // 마케팅 활용 동의
+            var5: false,  // 마케팅 이메일 수신 동의
+            var6: false,  // 마케팅 SMS 수신 동의
+            var7: false,  // 마케팅 전화 수신 동의
+            var8: false,  // 심야 마케팅 SMS 수신 동의
+            var9: false,  // 심야 마케팅 전화 수신 동의
+            var10: false  // 예비용
         },
         validationErrors = {},
         loading = false,
@@ -132,17 +144,25 @@ const Signup = (props: any) => {
     const {
         handleChange = (e: any) => {
             console.log('handleChange:', e.target.name, e.target.value);
-            // 로컬 state 업데이트
-            if (formData.user_id === undefined) {
-                setLocalFormData(prev => ({
-                    ...prev,
-                    [e.target.name]: e.target.value
-                }));
-            }
+            // 로컬 state 업데이트 (항상 업데이트)
+            setLocalFormData(prev => ({
+                ...prev,
+                [e.target.name]: e.target.value
+            }));
         },
         handleSubmit = (e: any) => {
             e.preventDefault();
-            console.log('Signup attempt:', formData, agreements);
+            
+            // var 필드 포함한 전체 데이터
+            const submitData = {
+                ...actualFormData,
+                // var 필드들이 이미 포함되어 있음
+            };
+            
+            console.log('Signup attempt with var fields:', submitData);
+            console.log('Agreements:', actualAgreements);
+            
+            // 실제 API 호출 시 var1~var10 필드가 포함되어 전송됨
             alert('회원가입이 완료되었습니다.');
         },
         handleIdCheck = () => {
@@ -151,48 +171,85 @@ const Signup = (props: any) => {
         },
         handleAgreementChange = (field: string, checked: boolean) => {
             console.log('Agreement change:', field, checked);
-            // 로컬 state 업데이트
-            if (agreements.all === undefined) {
-                setLocalAgreements(prev => ({
+            
+            // 로컬 agreements 업데이트
+            setLocalAgreements(prev => ({
+                ...prev,
+                [field]: checked
+            }));
+            
+            // var 필드도 함께 업데이트
+            const varField = agreementToVarMapping[field];
+            if (varField) {
+                setLocalFormData(prev => ({
                     ...prev,
-                    [field]: checked
+                    [varField]: checked
                 }));
             }
         },
         handleAllAgree = (checked: boolean) => {
             console.log('All agree:', checked);
-            // 로컬 state 업데이트
-            if (agreements.all === undefined) {
-                setLocalAgreements({
-                    all: checked,
-                    terms: checked,
-                    privacy: checked,
-                    personalService: checked,
-                    marketing: checked,
-                    marketingEmail: checked,
-                    marketingSMS: checked,
-                    marketingPhone: checked,
-                    nightMarketing: checked,
-                    nightMarketingSMS: checked,
-                    nightMarketingPhone: checked
-                });
-            }
+            
+            // 모든 agreements 업데이트
+            const newAgreements = {
+                all: checked,
+                terms: checked,
+                privacy: checked,
+                personalService: checked,
+                marketing: checked,
+                marketingEmail: checked,
+                marketingSMS: checked,
+                marketingPhone: checked,
+                nightMarketing: checked,
+                nightMarketingSMS: checked,
+                nightMarketingPhone: checked
+            };
+            setLocalAgreements(newAgreements);
+            
+            // var 필드들도 함께 업데이트
+            const varUpdates = {};
+            Object.keys(agreementToVarMapping).forEach(key => {
+                const varField = agreementToVarMapping[key];
+                varUpdates[varField] = checked;
+            });
+            
+            setLocalFormData(prev => ({
+                ...prev,
+                ...varUpdates
+            }));
         },
         handleMarketingAgree = (checked: boolean) => {
             console.log('Marketing agree:', checked);
-            // 로컬 state 업데이트
-            if (agreements.all === undefined) {
-                setLocalAgreements(prev => ({
-                    ...prev,
-                    marketing: checked,
-                    marketingEmail: checked,
-                    marketingSMS: checked,
-                    marketingPhone: checked,
-                    nightMarketing: checked,
-                    nightMarketingSMS: checked,
-                    nightMarketingPhone: checked
-                }));
-            }
+            
+            // 마케팅 관련 agreements 업데이트
+            const marketingAgreements = {
+                marketing: checked,
+                marketingEmail: checked,
+                marketingSMS: checked,
+                marketingPhone: checked,
+                nightMarketing: checked,
+                nightMarketingSMS: checked,
+                nightMarketingPhone: checked
+            };
+            setLocalAgreements(prev => ({
+                ...prev,
+                ...marketingAgreements
+            }));
+            
+            // 마케팅 관련 var 필드들도 함께 업데이트
+            const marketingVarUpdates = {
+                var4: checked,  // marketing
+                var5: checked,  // marketingEmail
+                var6: checked,  // marketingSMS
+                var7: checked,  // marketingPhone
+                var8: checked,  // nightMarketingSMS
+                var9: checked   // nightMarketingPhone
+            };
+            
+            setLocalFormData(prev => ({
+                ...prev,
+                ...marketingVarUpdates
+            }));
         }
     } = actions;
 
@@ -207,40 +264,65 @@ const Signup = (props: any) => {
         cx = (...classes: any[]) => classes.filter(Boolean).join(' ')
     } = utils;
 
-    // 로컬 state for form data (웹빌더가 제공하지 않을 경우 사용)
+    // 약관 필드와 var 필드 매핑
+    const agreementToVarMapping = {
+        terms: 'var1',           // 이용약관 동의
+        privacy: 'var2',         // 개인정보수집 및 이용 동의
+        personalService: 'var3', // 개인 맞춤형 서비스 활용 동의
+        marketing: 'var4',       // 마케팅 활용 동의
+        marketingEmail: 'var5',  // 마케팅 이메일 수신 동의
+        marketingSMS: 'var6',    // 마케팅 SMS 수신 동의
+        marketingPhone: 'var7',  // 마케팅 전화 수신 동의
+        nightMarketingSMS: 'var8', // 심야 마케팅 SMS 수신 동의
+        nightMarketingPhone: 'var9' // 심야 마케팅 전화 수신 동의
+    };
+
+    // 로컬 state for form data (항상 사용)
     const [localFormData, setLocalFormData] = React.useState({
-        user_id: '',
-        password: '',
-        password_confirm: '',
-        name: '',
-        birth_date: '',
-        phone: '',
-        email: '',
-        email_domain: '직접입력',
-        referral_code: '',
-        referral_code_from_url: false
+        user_id: formData.user_id || '',
+        password: formData.password || '',
+        password_confirm: formData.password_confirm || '',
+        name: formData.name || '',
+        birth_date: formData.birth_date || '',
+        phone: formData.phone || '',
+        email: formData.email || '',
+        email_domain: formData.email_domain || '직접입력',
+        referral_code: formData.referral_code || '',
+        referral_code_from_url: formData.referral_code_from_url || false,
+        
+        // var 필드 초기값
+        var1: formData.var1 || false,
+        var2: formData.var2 || false,
+        var3: formData.var3 || false,
+        var4: formData.var4 || false,
+        var5: formData.var5 || false,
+        var6: formData.var6 || false,
+        var7: formData.var7 || false,
+        var8: formData.var8 || false,
+        var9: formData.var9 || false,
+        var10: formData.var10 || false
     });
 
-    // 실제 사용할 formData
-    const actualFormData = (formData.user_id !== undefined) ? formData : localFormData;
+    // 실제 사용할 formData - 항상 localFormData 사용
+    const actualFormData = localFormData;
 
-    // 로컬 state for checkboxes (웹빌더가 제공하지 않을 경우 사용)
+    // 로컬 state for checkboxes (항상 사용)
     const [localAgreements, setLocalAgreements] = React.useState({
-        all: false,
-        terms: false,
-        privacy: false,
-        personalService: false,
-        marketing: false,
-        marketingEmail: false,
-        marketingSMS: false,
-        marketingPhone: false,
-        nightMarketing: false,
-        nightMarketingSMS: false,
-        nightMarketingPhone: false
+        all: agreements.all || false,
+        terms: agreements.terms || false,
+        privacy: agreements.privacy || false,
+        personalService: agreements.personalService || false,
+        marketing: agreements.marketing || false,
+        marketingEmail: agreements.marketingEmail || false,
+        marketingSMS: agreements.marketingSMS || false,
+        marketingPhone: agreements.marketingPhone || false,
+        nightMarketing: agreements.nightMarketing || false,
+        nightMarketingSMS: agreements.nightMarketingSMS || false,
+        nightMarketingPhone: agreements.nightMarketingPhone || false
     });
 
-    // 실제 사용할 agreements (웹빌더 제공 시 웹빌더 것 사용, 아니면 로컬 사용)
-    const actualAgreements = (agreements.all !== undefined) ? agreements : localAgreements;
+    // 실제 사용할 agreements - 항상 localAgreements 사용
+    const actualAgreements = localAgreements;
 
     // Tailwind CSS 로드
     useEffect(() => {
