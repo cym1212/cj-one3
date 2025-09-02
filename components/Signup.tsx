@@ -65,7 +65,7 @@ const Checkbox = ({
             onChange={(e) => !disabled && onChange(e.target.checked)}
             disabled={disabled}
         />
-        <div className={`border-1 rounded flex items-center justify-center transition-colors ${checked ? 'bg-accent border-accent' : 'bg-white border-border'} group-hover/poj2-checkbox:border-accent cursor-pointer w-5 h-5 ${className.includes('text-xs') ? 'w-4 h-4' : ''}`}>
+        <div className={`border rounded flex items-center justify-center transition-colors ${checked ? 'bg-accent border-accent' : 'bg-white border-border'} group-hover/poj2-checkbox:border-accent cursor-pointer ${className.includes('text-xs') ? 'w-4 h-4' : 'w-5 h-5'}`}>
             {checked && (
                 <svg width="12" height="9" viewBox="0 0 12 9" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1 4L4.5 7.5L11 1" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -78,7 +78,7 @@ const Checkbox = ({
     </label>
 );
 
-const SignupComponent = (props: any) => {
+const Signup = (props: any) => {
     // Props 구조 분해
     const {
         data = {},
@@ -132,6 +132,13 @@ const SignupComponent = (props: any) => {
     const {
         handleChange = (e: any) => {
             console.log('handleChange:', e.target.name, e.target.value);
+            // 로컬 state 업데이트
+            if (formData.user_id === undefined) {
+                setLocalFormData(prev => ({
+                    ...prev,
+                    [e.target.name]: e.target.value
+                }));
+            }
         },
         handleSubmit = (e: any) => {
             e.preventDefault();
@@ -139,7 +146,7 @@ const SignupComponent = (props: any) => {
             alert('회원가입이 완료되었습니다.');
         },
         handleIdCheck = () => {
-            console.log('ID duplicate check:', formData.user_id);
+            console.log('ID duplicate check:', actualFormData.user_id);
             alert('아이디 중복 확인');
         },
         handleAgreementChange = (field: string, checked: boolean) => {
@@ -200,6 +207,23 @@ const SignupComponent = (props: any) => {
         cx = (...classes: any[]) => classes.filter(Boolean).join(' ')
     } = utils;
 
+    // 로컬 state for form data (웹빌더가 제공하지 않을 경우 사용)
+    const [localFormData, setLocalFormData] = React.useState({
+        user_id: '',
+        password: '',
+        password_confirm: '',
+        name: '',
+        birth_date: '',
+        phone: '',
+        email: '',
+        email_domain: '직접입력',
+        referral_code: '',
+        referral_code_from_url: false
+    });
+
+    // 실제 사용할 formData
+    const actualFormData = (formData.user_id !== undefined) ? formData : localFormData;
+
     // 로컬 state for checkboxes (웹빌더가 제공하지 않을 경우 사용)
     const [localAgreements, setLocalAgreements] = React.useState({
         all: false,
@@ -258,7 +282,7 @@ const SignupComponent = (props: any) => {
                     )}
 
                     {/* 필수입력정보 */}
-                    <div style={{ marginBottom: '40px' }}>
+                    <div className="mb-10 lg:mb-12">
                         <h2 className="text-lg lg:text-xl font-semibold mb-3 lg:mb-4">{t('필수입력정보')}</h2>
                         <div className="space-y-2">
                             {/* 아이디 */}
@@ -267,12 +291,12 @@ const SignupComponent = (props: any) => {
                                     <div className="flex gap-2">
                                         <label htmlFor="id" className="sr-only">{t('아이디')}</label>
                                         <input 
-                                            id="id"
+                                            id="user_id"
                                             name="user_id"
                                             placeholder={t('아이디 영문, 숫자 조합 6~12자')}
                                             className="flex-1 px-4 lg:px-5 py-3 text-sm lg:text-base border placeholder-description transition-colors focus:outline-none focus:border-accent border-border"
                                             type="text"
-                                            value={formData.user_id || ''}
+                                            value={actualFormData.user_id || ''}
                                             onChange={handleChange}
                                             disabled={loading}
                                         />
@@ -301,7 +325,7 @@ const SignupComponent = (props: any) => {
                                         placeholder={t('비밀번호 영문, 숫자, 특수문자 조합 8~12자')}
                                         className="w-full px-4 lg:px-5 py-3 text-sm lg:text-base border placeholder-description transition-colors focus:outline-none focus:border-accent border-border"
                                         type="password"
-                                        value={formData.password || ''}
+                                        value={actualFormData.password || ''}
                                         onChange={handleChange}
                                         disabled={loading}
                                     />
@@ -316,12 +340,12 @@ const SignupComponent = (props: any) => {
                                 <div>
                                     <label htmlFor="confirmPassword" className="sr-only">{t('비밀번호 확인')}</label>
                                     <input 
-                                        id="confirmPassword"
+                                        id="password_confirm"
                                         name="password_confirm"
                                         placeholder={t('비밀번호 다시 입력')}
                                         className="w-full px-4 lg:px-5 py-3 text-sm lg:text-base border placeholder-description transition-colors focus:outline-none focus:border-accent border-border"
                                         type="password"
-                                        value={formData.password_confirm || ''}
+                                        value={actualFormData.password_confirm || ''}
                                         onChange={handleChange}
                                         disabled={loading}
                                     />
@@ -341,7 +365,7 @@ const SignupComponent = (props: any) => {
                                         placeholder={t('이름')}
                                         className="w-full px-4 lg:px-5 py-3 text-sm lg:text-base border placeholder-description transition-colors focus:outline-none focus:border-accent border-border"
                                         type="text"
-                                        value={formData.name || ''}
+                                        value={actualFormData.name || ''}
                                         onChange={handleChange}
                                         disabled={loading}
                                     />
@@ -356,12 +380,12 @@ const SignupComponent = (props: any) => {
                                 <div>
                                     <label htmlFor="birthDate" className="sr-only">{t('생년월일')}</label>
                                     <input 
-                                        id="birthDate"
+                                        id="birth_date"
                                         name="birth_date"
                                         placeholder={t('생년월일 예:19870101')}
                                         className="w-full px-4 lg:px-5 py-3 text-sm lg:text-base border placeholder-description transition-colors focus:outline-none focus:border-accent border-border"
                                         type="text"
-                                        value={formData.birth_date || ''}
+                                        value={actualFormData.birth_date || ''}
                                         onChange={handleChange}
                                         disabled={loading}
                                     />
@@ -381,7 +405,7 @@ const SignupComponent = (props: any) => {
                                         placeholder={t('휴대폰 번호 -없이 입력')}
                                         className="w-full px-4 lg:px-5 py-3 text-sm lg:text-base border placeholder-description transition-colors focus:outline-none focus:border-accent border-border"
                                         type="text"
-                                        value={formData.phone || ''}
+                                        value={actualFormData.phone || ''}
                                         onChange={handleChange}
                                         disabled={loading}
                                     />
@@ -396,12 +420,12 @@ const SignupComponent = (props: any) => {
                                 <div>
                                     <label htmlFor="referralCode" className="sr-only">{t('추천인 코드')}</label>
                                     <input
-                                        id="referralCode"
+                                        id="referral_code"
                                         name="referral_code"
                                         placeholder={t('추천인 코드 입력')}
                                         className="w-full px-4 lg:px-5 py-3 text-sm lg:text-base border placeholder-description transition-colors focus:outline-none focus:border-accent border-border"
                                         type="text"
-                                        value={formData.referral_code || ''}
+                                        value={actualFormData.referral_code || ''}
                                         onChange={handleChange}
                                         disabled={formData.referral_code_from_url || loading}
                                     />
@@ -422,14 +446,14 @@ const SignupComponent = (props: any) => {
                                             placeholder={t('이메일')}
                                             className="flex-1 px-4 lg:px-5 py-3 text-sm lg:text-base border placeholder-description transition-colors focus:outline-none focus:border-accent border-border"
                                             type="text"
-                                            value={formData.email || ''}
+                                            value={actualFormData.email || ''}
                                             onChange={handleChange}
                                             disabled={loading}
                                         />
                                         <select
                                             name="email_domain"
                                             className="w-[150px] h-[45px] px-4 lg:px-5 text-sm appearance-none lg:text-base border border-border transition-colors focus:outline-none focus:border-accent bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iOCIgdmlld0JveD0iMCAwIDEyIDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xIDFMNiA2TDExIDEiIHN0cm9rZT0iIzk5OTk5OSIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K')] bg-no-repeat bg-[center_right_10px]"
-                                            value={formData.email_domain || '직접입력'}
+                                            value={actualFormData.email_domain || '직접입력'}
                                             onChange={handleChange}
                                             disabled={loading}
                                         >
@@ -451,7 +475,7 @@ const SignupComponent = (props: any) => {
                     </div>
 
                     {/* 약관동의 */}
-                    <div style={{ marginBottom: '40px' }}>
+                    <div className="mb-10 lg:mb-12">
                         <h2 className="text-lg lg:text-xl font-semibold mb-3 lg:mb-4">{t('약관동의')}</h2>
                         <div className="space-y-3">
                             {/* 전체 동의 */}
@@ -573,7 +597,7 @@ const SignupComponent = (props: any) => {
                     </div>
 
                     {/* 개인정보 수집·이용에 대한 안내 */}
-                    <div style={{ marginBottom: '40px' }}>
+                    <div className="mb-10 lg:mb-12">
                         <h2 className="text-sm lg:text-base font-semibold mb-2">{t('개인정보 수집·이용에 대한 안내')}</h2>
                         <div>
                             <table className="w-full text-xs border border-border overflow-hidden">
@@ -649,4 +673,4 @@ const SignupComponent = (props: any) => {
     );
 };
 
-export default SignupComponent;
+export default Signup;
