@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>다나눔 소개</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Nanum Square', 'Noto Sans KR', sans-serif;
+      background: #f8f8f8;
+    }
+
+    .main-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+
+    /* 섹션 1: 그리드 갤러리 */
+    .gallery-section {
+      margin-bottom: 60px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .gallery-item {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .gallery-text {
+      padding: 20px;
+    }
+
+    .gallery-title {
+      font-size: 15px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    .gallery-desc {
+      font-size: 13px;
+      color: #999;
+      line-height: 1.5;
+    }
+
+    /* 섹션 2: 블로그 링크 */
+    .blog-section {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      margin-bottom: 60px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .blog-text {
+      flex: 1;
+    }
+
+    .blog-text a {
+      color: #5d5d5d;
+      font-size: 14px;
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    .blog-text a:hover {
+      text-decoration: underline;
+    }
+
+    .blog-text p {
+      color: #5d5d5d;
+      font-size: 14px;
+      margin-top: 15px;
+      line-height: 1.6;
+    }
+
+    .blog-image {
+      flex: 1;
+    }
+
+    .blog-image img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    /* 섹션 3: 비디오 */
+    .video-section {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      margin-bottom: 60px;
+    }
+
+    .video-wrapper {
+      flex: 1;
+      position: relative;
+      padding-bottom: 35%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-text {
+      flex: 1;
+      padding: 30px;
+    }
+
+    .video-text p {
+      color: #999;
+      font-size: 13px;
+      line-height: 1.8;
+      margin-bottom: 8px;
+    }
+
+    /* 섹션 4: 하단 이미지 그리드 */
+    .bottom-gallery {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .bottom-item {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .bottom-item img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .bottom-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      padding: 20px;
+      color: white;
+    }
+
+    .bottom-title {
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .bottom-desc {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    /* 모바일 반응형 */
+    @media (max-width: 1024px) {
+      .gallery-grid,
+      .bottom-gallery {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .gallery-grid,
+      .bottom-gallery {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
+
+      .blog-section {
+        flex-direction: column;
+        padding: 30px 20px;
+      }
+
+      .blog-image img {
+        height: 200px;
+      }
+
+      .video-section {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .video-wrapper {
+        padding-bottom: 56.25%;
+      }
+
+      .video-text {
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-container {
+        padding: 30px 15px;
+      }
+
+      .gallery-grid,
+      .bottom-gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-item img,
+      .bottom-item img {
+        height: 180px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="main-container">
+
+  <!-- 섹션 2: 블로그 링크 -->
+  <div class="blog-section">
+    <div class="blog-text">
+      <a href="https://blog.naver.com/mosfnet/222417822636">https://blog.naver.com/mosfnet/222417822636</a>
+      <p>기획재정부 공식블로그 (리커버리웨어 관련 내용)</p>
+    </div>
+    <div class="blog-image">
+      <img src="https://lh3.googleusercontent.com/DDr-6Hs_yS9uVIx04Fusky3ZGz4sUvD1bBFY_Y9Q-5cksw2WS2KMT4vOb-BHT5PSJ6mx_CgK7DY-hcTvoGBUxWWY3pW-WFf95INftDC64A=s0" alt="블로그 이미지">
+    </div>
+  </div>
+
+  <!-- 섹션 3: 비디오 -->
+  <div class="video-section">
+    <div class="video-wrapper">
+      <iframe src="https://www.youtube.com/embed/koaxOOokVOk?playsinline=1"
+              frameborder="0"
+              allowfullscreen="true"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+      </iframe>
+    </div>
+    <div class="video-text">
+      <p>대한노인회장상</p>
+      <p>도전한국인 상 수상</p>
+    </div>
+  </div>
+  <!-- 섹션 1: 상단 갤러리 -->
+  <div class="gallery-section">
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="https://lh3.googleusercontent.com/BWJSOP0O2jAMZG6vkAQCQca3kr_UaDkuRQcNMd5Gare-kPzkv7G2i1EGAEiT1QVTZig0AQuRIxreytPB7UYEsMAvU7TezTaf0OHa6KP7STR0uIopCX-Seps=s0" alt="다문화복지센터">
+        <div class="gallery-text">
+          <div class="gallery-title">다문화복지센터 mou체결</div>
+          <div class="gallery-desc">장기간 수익기부활동 중인 다나눔</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://lh3.googleusercontent.com/2bwRwGI4vfj6ubBPq0hPrsNBvnrVs0hLdri3Bchh4pI16prwWi5qWEOdq4PaiytytXl2mhH5Q-Go9sIC9Bdj53SoQ9WBnIi1ei4h2ef3Zw2xGq7zbB9FSw=s0" alt="종로 매장">
+        <div class="gallery-text">
+          <div class="gallery-title">종로 지경매장</div>
+          <div class="gallery-desc">서울 종로5가에 위치한 다나눔 매장</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://lh3.googleusercontent.com/Up4kk1jM_gV_PowYicE9GqGHqH97JazHVvaDYM6gMw2Zwkedd3F8n92tdH9Z9j6Vpw239cqxRDpa8p92Bb3MUX7ktJVR8FcFaweXGusNhiymYkMo3vrl=s0" alt="광주공장">
+        <div class="gallery-text">
+          <div class="gallery-title">다나눔 광주공장</div>
+          <div class="gallery-desc">경기도 광주에 위치한 다나눔 편직 공장</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://lh3.googleusercontent.com/bfDmqsmBAadaU7NTOzdUvewzUJAgyDcLsFd7xThEdbhsYUW2I2U6NI8L-oUw9cNEVLC5GXOe57jnltr9RCCbDWZX7-rhVTu5Vmh0T7FXQS7RzaW-NIW5BPk=s0" alt="포천공장">
+        <div class="gallery-text">
+          <div class="gallery-title">다나눔 포천공장</div>
+          <div class="gallery-desc">포천에 위치한 다나눔 원사 생산 공장</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://lh3.googleusercontent.com/Q8DLy3yhf1gYUTDAkFLCh-VIkRA-flrG6_rIp6jQiJSAoLgmgOA7j9ybG_56YA39_OTbjQdql9dEruqTTYqPF6baOjIbZT8UKY-ej8i5pd9KKdrc1m4tFsQ=s0" alt="프리뷰 전시">
+        <div class="gallery-text">
+          <div class="gallery-title">2023프리뷰 인 서울 전시</div>
+          <div class="gallery-desc">서울 코엑스 특별 초대 업체로 참석</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://lh3.googleusercontent.com/ilHrr6RApKeCCU7dLThyPPTJRJsIkQZiWgtwe98uD0bqhqf0EVifz5K_gKH35Q_HW4HbB99bTH8xVCl7IKbt9jTs0ivrxosiQ4jhaz-R7WV8aJlOhx3QUdw=s0" alt="전시관">
+        <div class="gallery-text">
+          <div class="gallery-title">프리뷰 인 서울 전시관</div>
+          <div class="gallery-desc">전시관 영상 및 진열 홍보</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://lh3.googleusercontent.com/R01WQxQ4fQ3BYYHd6E6SnREfsg7X3Z3a8M_gfK-hK9KmAbB2XUsLWuyaJks9vzNL55GjQYl7Xa66WijRbK2F2rB60tNsrPOhW46SiekAWEO51B5Fx0n2PQ=s0" alt="방문인원">
+        <div class="gallery-text">
+          <div class="gallery-title">프리뷰 인 방문인원</div>
+          <div class="gallery-desc">국내 주요인사 방문 및 전 세계 패션 관계자 방문</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://lh3.googleusercontent.com/T0AG6y2Sc_E8LRUcSGjjSMrtifhQZfPxnEqK59_kXX7QXc0Vh41ezl2cmzwr0O19CfqNqg8Wu9kXGkPj4onXvsm9q5-SgHzEJcVS4xvPJH_rhNbNm0gLig=s0" alt="프리뷰 전시">
+        <div class="gallery-text">
+          <div class="gallery-title">프리뷰 인 서울 전시</div>
+          <div class="gallery-desc">8월 23,24,25 전시 홍보</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<!--  &lt;!&ndash; 섹션 4: 하단 갤러리 &ndash;&gt;-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+<!--<div class="gallery-grid">-->
+<!--  <div class="gallery-item">-->
+<!--    <img src="https://lh3.googleusercontent.com/BWJSOP0O2jAMZG6vkAQCQca3kr_UaDkuRQcNMd5Gare-kPzkv7G2i1EGAEiT1QVTZig0AQuRIxreytPB7UYEsMAvU7TezTaf0OHa6KP7STR0uIopCX-Seps=s0" alt="다문화복지센터">-->
+<!--    <div class="gallery-text">-->
+<!--      <div class="gallery-title">다문화복지센터 mou체결</div>-->
+<!--      <div class="gallery-desc">장기간 수익기부활동 중인 다나눔</div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="gallery-item">-->
+<!--    <img src="https://lh3.googleusercontent.com/2bwRwGI4vfj6ubBPq0hPrsNBvnrVs0hLdri3Bchh4pI16prwWi5qWEOdq4PaiytytXl2mhH5Q-Go9sIC9Bdj53SoQ9WBnIi1ei4h2ef3Zw2xGq7zbB9FSw=s0" alt="종로 매장">-->
+<!--    <div class="gallery-text">-->
+<!--      <div class="gallery-title">종로 지경매장</div>-->
+<!--      <div class="gallery-desc">서울 종로5가에 위치한 다나눔 매장</div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="gallery-item">-->
+<!--    <img src="https://lh3.googleusercontent.com/Up4kk1jM_gV_PowYicE9GqGHqH97JazHVvaDYM6gMw2Zwkedd3F8n92tdH9Z9j6Vpw239cqxRDpa8p92Bb3MUX7ktJVR8FcFaweXGusNhiymYkMo3vrl=s0" alt="광주공장">-->
+<!--    <div class="gallery-text">-->
+<!--      <div class="gallery-title">다나눔 광주공장</div>-->
+<!--      <div class="gallery-desc">경기도 광주에 위치한 다나눔 편직 공장</div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="gallery-item">-->
+<!--    <img src="https://lh3.googleusercontent.com/bfDmqsmBAadaU7NTOzdUvewzUJAgyDcLsFd7xThEdbhsYUW2I2U6NI8L-oUw9cNEVLC5GXOe57jnltr9RCCbDWZX7-rhVTu5Vmh0T7FXQS7RzaW-NIW5BPk=s0" alt="포천공장">-->
+<!--    <div class="gallery-text">-->
+<!--      <div class="gallery-title">다나눔 포천공장</div>-->
+<!--      <div class="gallery-desc">포천에 위치한 다나눔 원사 생산 공장</div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="gallery-item">-->
+<!--    <img src="https://lh3.googleusercontent.com/Q8DLy3yhf1gYUTDAkFLCh-VIkRA-flrG6_rIp6jQiJSAoLgmgOA7j9ybG_56YA39_OTbjQdql9dEruqTTYqPF6baOjIbZT8UKY-ej8i5pd9KKdrc1m4tFsQ=s0" alt="프리뷰 전시">-->
+<!--    <div class="gallery-text">-->
+<!--      <div class="gallery-title">2023프리뷰 인 서울 전시</div>-->
+<!--      <div class="gallery-desc">서울 코엑스 특별 초대 업체로 참석</div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="gallery-item">-->
+<!--    <img src="https://lh3.googleusercontent.com/ilHrr6RApKeCCU7dLThyPPTJRJsIkQZiWgtwe98uD0bqhqf0EVifz5K_gKH35Q_HW4HbB99bTH8xVCl7IKbt9jTs0ivrxosiQ4jhaz-R7WV8aJlOhx3QUdw=s0" alt="전시관">-->
+<!--    <div class="gallery-text">-->
+<!--      <div class="gallery-title">프리뷰 인 서울 전시관</div>-->
+<!--      <div class="gallery-desc">전시관 영상 및 진열 홍보</div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="gallery-item">-->
+<!--    <img src="https://lh3.googleusercontent.com/R01WQxQ4fQ3BYYHd6E6SnREfsg7X3Z3a8M_gfK-hK9KmAbB2XUsLWuyaJks9vzNL55GjQYl7Xa66WijRbK2F2rB60tNsrPOhW46SiekAWEO51B5Fx0n2PQ=s0" alt="방문인원">-->
+<!--    <div class="gallery-text">-->
+<!--      <div class="gallery-title">프리뷰 인 방문인원</div>-->
+<!--      <div class="gallery-desc">국내 주요인사 방문 및 전 세계 패션 관계자 방문</div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="gallery-item">-->
+<!--    <img src="https://lh3.googleusercontent.com/T0AG6y2Sc_E8LRUcSGjjSMrtifhQZfPxnEqK59_kXX7QXc0Vh41ezl2cmzwr0O19CfqNqg8Wu9kXGkPj4onXvsm9q5-SgHzEJcVS4xvPJH_rhNbNm0gLig=s0" alt="프리뷰 전시">-->
+<!--    <div class="gallery-text">-->
+<!--      <div class="gallery-title">프리뷰 인 서울 전시</div>-->
+<!--      <div class="gallery-desc">8월 23,24,25 전시 홍보</div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+

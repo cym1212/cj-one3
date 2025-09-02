@@ -1,0 +1,440 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="ko">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--  <title>다나눔 동영상 갤러리</title>-->
+<!--  <style>-->
+<!--    body {-->
+<!--      margin: 0;-->
+<!--      font-family: 'Nanum Gothic', Arial, sans-serif;-->
+<!--      background: #f0f0f0;-->
+<!--    }-->
+
+<!--    .container {-->
+<!--      max-width: 1200px;-->
+<!--      margin: 0 auto;-->
+<!--    }-->
+
+<!--    .video-item {-->
+<!--      background: white;-->
+<!--      border-radius: 10px;-->
+<!--      padding: 20px;-->
+<!--      margin-bottom: 25px;-->
+<!--      box-shadow: 0 2px 10px rgba(0,0,0,0.1);-->
+<!--    }-->
+
+<!--    .video-content {-->
+<!--      display: flex;-->
+<!--      gap: 30px;-->
+<!--      align-items: center;-->
+<!--    }-->
+
+<!--    .video-text {-->
+<!--      flex: 1;-->
+<!--    }-->
+
+<!--    .video-text h2 {-->
+<!--      color: #333;-->
+<!--      font-size: 20px;-->
+<!--      margin: 0 0 10px 0;-->
+<!--    }-->
+
+<!--    .video-text p {-->
+<!--      color: #666;-->
+<!--      font-size: 14px;-->
+<!--      line-height: 1.6;-->
+<!--      margin: 0;-->
+<!--    }-->
+
+<!--    .video-frame {-->
+<!--      flex: 1.2;-->
+<!--    }-->
+
+<!--    .video-container {-->
+<!--      position: relative;-->
+<!--      width: 100%;-->
+<!--      padding-bottom: 56.25%;-->
+<!--      height: 0;-->
+<!--      overflow: hidden;-->
+<!--      background: #000;-->
+<!--      border-radius: 8px;-->
+<!--    }-->
+
+<!--    .video-container iframe {-->
+<!--      position: absolute;-->
+<!--      top: 0;-->
+<!--      left: 0;-->
+<!--      width: 100%;-->
+<!--      height: 100%;-->
+<!--      border: 0;-->
+<!--    }-->
+
+<!--    @media (max-width: 768px) {-->
+<!--      .video-content {-->
+<!--        flex-direction: column;-->
+<!--      }-->
+
+<!--      .video-text {-->
+<!--        margin-bottom: 15px;-->
+<!--      }-->
+
+<!--      .video-text h2 {-->
+<!--        font-size: 18px;-->
+<!--      }-->
+<!--    }-->
+<!--  </style>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<div class="container">-->
+
+<!--  &lt;!&ndash; 영상 1 &ndash;&gt;-->
+<!--  <div class="video-item">-->
+<!--    <div class="video-content">-->
+<!--      <div class="video-text">-->
+<!--        <h2>다나눔 리커버리웨어 기업탐방</h2>-->
+<!--        <p>입고만 있어도 건강해지는 리커버리웨어 봉당tv에서 기업탐방으로 제작된 영상입니다.<br>-->
+<!--          영상보시고 다나눔이 어떤 회사인지 확인해보세요</p>-->
+<!--      </div>-->
+<!--      <div class="video-frame">-->
+<!--        <div class="video-container">-->
+<!--          <iframe src="https://www.youtube.com/embed/oUCJ5JQ7nxA"-->
+<!--                  title="다나눔 기업탐방"-->
+<!--                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"-->
+<!--                  allowfullscreen></iframe>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  &lt;!&ndash; 영상 2 &ndash;&gt;-->
+<!--  <div class="video-item">-->
+<!--    <div class="video-content">-->
+<!--      <div class="video-text">-->
+<!--        <h2>이봉주 선수 인터뷰</h2>-->
+<!--        <p>다나눔 리커버리웨어를 입고 건강해진 모습으로 인터뷰하는 이봉주 선수 입니다.<br>-->
+<!--          국민 마라토너 이봉주 선수를 응원합니다.</p>-->
+<!--      </div>-->
+<!--      <div class="video-frame">-->
+<!--        <div class="video-container">-->
+<!--          <iframe src="https://www.youtube.com/embed/O9CIEeWQHN8"-->
+<!--                  title="이봉주 선수 인터뷰"-->
+<!--                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"-->
+<!--                  allowfullscreen></iframe>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  &lt;!&ndash; 영상 3 &ndash;&gt;-->
+<!--  <div class="video-item">-->
+<!--    <div class="video-content">-->
+<!--      <div class="video-text">-->
+<!--        <h2>세계홍보대사 위촉식</h2>-->
+<!--        <p>25년 5월3일 영화배우겸 탤런트 전원주, 서우림, 김경애 님이 다나눔그룹의 "세계홍보대사"에 위촉되시고 유쾌한 시간을 보내셨습니다.</p>-->
+<!--      </div>-->
+<!--      <div class="video-frame">-->
+<!--        <div class="video-container">-->
+<!--          <iframe src="https://www.youtube.com/embed/GMclAnoe-Qc"-->
+<!--                  title="세계홍보대사 위촉식"-->
+<!--                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"-->
+<!--                  allowfullscreen></iframe>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  &lt;!&ndash; 영상 4 &ndash;&gt;-->
+<!--  <div class="video-item">-->
+<!--    <div class="video-content">-->
+<!--      <div class="video-text">-->
+<!--        <h2>다나눔그룹 소개</h2>-->
+<!--        <p>리커버리웨어를 연구, 개발, 제조, 생산, 유통 하는 다나눔그룹의 영상 입니다.</p>-->
+<!--      </div>-->
+<!--      <div class="video-frame">-->
+<!--        <div class="video-container">-->
+<!--          <iframe src="https://www.youtube.com/embed/SA-VJ6eIWts"-->
+<!--                  title="다나눔그룹 소개"-->
+<!--                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"-->
+<!--                  allowfullscreen></iframe>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  &lt;!&ndash; 영상 5 &ndash;&gt;-->
+<!--  <div class="video-item">-->
+<!--    <div class="video-content">-->
+<!--      <div class="video-text">-->
+<!--        <h2>2024년 송년 행사</h2>-->
+<!--        <p>다나눔그룹의 다사다난했던 2024년을 보내며 나눔과 배려 그리고 함께 만들어가는 건강한 사회를 위하여 다나눔의 가치를 공유하는 시간을 가진 날 이였습니다.</p>-->
+<!--      </div>-->
+<!--      <div class="video-frame">-->
+<!--        <div class="video-container">-->
+<!--          <iframe src="https://www.youtube.com/embed/k0mHo-MOoBA"-->
+<!--                  title="2024년 송년 행사"-->
+<!--                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"-->
+<!--                  allowfullscreen></iframe>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  &lt;!&ndash; 영상 6 &ndash;&gt;-->
+<!--  <div class="video-item">-->
+<!--    <div class="video-content">-->
+<!--      <div class="video-text">-->
+<!--        <h2>차소 원장님 인터뷰</h2>-->
+<!--        <p>의료봉사 및 에너지의학을 연구하시고 연간 10,000명 이상의 건강개선에 도움을 주시는 차소 원장님의 다나눔리커버리웨어에 대한 의견을 말씀해주십니다.</p>-->
+<!--      </div>-->
+<!--      <div class="video-frame">-->
+<!--        <div class="video-container">-->
+<!--          <iframe src="https://www.youtube.com/embed/GhS38xA3ADA"-->
+<!--                  title="차소 원장님 인터뷰"-->
+<!--                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"-->
+<!--                  allowfullscreen></iframe>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--</div>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>다나눔 동영상 갤러리</title>
+  <script>
+    // ===== 1) 랜덤 프리픽스 생성 (a-z 5글자) =====
+    (function(){
+      function randPrefix(n){var s='',c='abcdefghijklmnopqrstuvwxyz';for(var i=0;i<n;i++)s+=c[Math.floor(Math.random()*c.length)];return s;}
+      var px = randPrefix(5); // 예: "abxyz"
+
+      // ===== 2) 루트에 프리픽스 클래스 부여 =====
+      document.documentElement.classList.add(px + '-html'); // 선택자 안전장치
+      // body가 아직 없을 수 있으므로 DOMContentLoaded에서 스코프 클래스 부여
+      document.addEventListener('DOMContentLoaded', function(){
+        var root = document.getElementById('dnv-root');
+        if (root) root.classList.add(px + '-scope');
+      });
+
+      // ===== 3) 프리픽스에 스코프된 CSS 주입 =====
+      var css = `
+/* 스코프: #dnv-root.<px>-scope 아래만 적용 */
+#dnv-root.${px}-scope { background:#f0f0f0; font-family:'Nanum Gothic', Arial, sans-serif; }
+#dnv-root.${px}-scope * { box-sizing:border-box; }
+
+#dnv-root.${px}-scope .container { max-width:1200px; margin:0 auto; padding:0 12px; }
+
+#dnv-root.${px}-scope .video-item {
+  background:#fff; border-radius:10px; padding:20px; margin:0 0 25px 0;
+  box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+#dnv-root.${px}-scope .video-content {
+  display:flex; gap:30px; align-items:center;
+}
+
+#dnv-root.${px}-scope .video-text { flex:1; min-width:0; }
+#dnv-root.${px}-scope .video-text h2 { color:#333; font-size:20px; margin:0 0 10px 0; }
+#dnv-root.${px}-scope .video-text p { color:#666; font-size:14px; line-height:1.6; margin:0; }
+
+#dnv-root.${px}-scope .video-frame { flex:1.2; min-width:260px; }
+
+/* 비디오 래퍼: aspect-ratio 우선 + padding-bottom 폴백 */
+#dnv-root.${px}-scope .video-container {
+  position:relative;
+  width:100%;
+  background:#000;
+  border-radius:8px;
+  overflow:hidden;
+}
+
+/* 최신 브라우저: aspect-ratio 사용 */
+@supports (aspect-ratio: 16/9) {
+  #dnv-root.${px}-scope .video-container {
+    aspect-ratio:16 / 9;
+    height:auto;
+  }
+  #dnv-root.${px}-scope .video-container iframe {
+    position:absolute; inset:0; width:100%; height:100%; border:0; display:block;
+  }
+}
+
+/* 구형 브라우저 폴백: padding-bottom 트릭 */
+@supports not (aspect-ratio: 16/9) {
+  #dnv-root.${px}-scope .video-container {
+    height:0;
+    padding-bottom:56.25%; /* 16:9 */
+  }
+  #dnv-root.${px}-scope .video-container iframe {
+    position:absolute; top:0; left:0; width:100%; height:100%; border:0; display:block;
+  }
+}
+
+/* 일부 리치에디터 전역 규칙(iframe: width:auto;height:auto 등) 덮어쓰기 */
+#dnv-root.${px}-scope .video-container iframe {
+  width:100% !important; height:100% !important; display:block !important;
+  background:#000;
+}
+
+/* 반응형: 모바일에서 세로 스택 */
+@media (max-width: 768px) {
+  #dnv-root.${px}-scope .video-content { flex-direction:column; }
+  #dnv-root.${px}-scope .video-text { margin-bottom:15px; }
+  #dnv-root.${px}-scope .video-text h2 { font-size:18px; }
+}
+      `;
+      var style = document.createElement('style');
+      style.type = 'text/css';
+      style.appendChild(document.createTextNode(css));
+      document.head.appendChild(style);
+    })();
+  </script>
+</head>
+<body>
+
+<div id="dnv-root">
+  <div class="container">
+
+    <!-- 영상 1 -->
+    <div class="video-item">
+      <div class="video-content">
+        <div class="video-text">
+          <h2>다나눔 리커버리웨어 기업탐방</h2>
+          <p>입고만 있어도 건강해지는 리커버리웨어 봉당tv에서 기업탐방으로 제작된 영상입니다.<br>
+            영상보시고 다나눔이 어떤 회사인지 확인해보세요</p>
+        </div>
+        <div class="video-frame">
+          <div class="video-container">
+            <iframe
+                    src="https://www.youtube.com/embed/oUCJ5JQ7nxA"
+                    title="다나눔 기업탐방"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                    playsinline
+                    referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 영상 2 -->
+    <div class="video-item">
+      <div class="video-content">
+        <div class="video-text">
+          <h2>이봉주 선수 인터뷰</h2>
+          <p>다나눔 리커버리웨어를 입고 건강해진 모습으로 인터뷰하는 이봉주 선수 입니다.<br>
+            국민 마라토너 이봉주 선수를 응원합니다.</p>
+        </div>
+        <div class="video-frame">
+          <div class="video-container">
+            <iframe
+                    src="https://www.youtube.com/embed/O9CIEeWQHN8"
+                    title="이봉주 선수 인터뷰"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                    playsinline
+                    referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 영상 3 -->
+    <div class="video-item">
+      <div class="video-content">
+        <div class="video-text">
+          <h2>세계홍보대사 위촉식</h2>
+          <p>25년 5월3일 영화배우겸 탤런트 전원주, 서우림, 김경애 님이 다나눔그룹의 "세계홍보대사"에 위촉되시고 유쾌한 시간을 보내셨습니다.</p>
+        </div>
+        <div class="video-frame">
+          <div class="video-container">
+            <iframe
+                    src="https://www.youtube.com/embed/GMclAnoe-Qc"
+                    title="세계홍보대사 위촉식"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                    playsinline
+                    referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 영상 4 -->
+    <div class="video-item">
+      <div class="video-content">
+        <div class="video-text">
+          <h2>다나눔그룹 소개</h2>
+          <p>리커버리웨어를 연구, 개발, 제조, 생산, 유통 하는 다나눔그룹의 영상 입니다.</p>
+        </div>
+        <div class="video-frame">
+          <div class="video-container">
+            <iframe
+                    src="https://www.youtube.com/embed/SA-VJ6eIWts"
+                    title="다나눔그룹 소개"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                    playsinline
+                    referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 영상 5 -->
+    <div class="video-item">
+      <div class="video-content">
+        <div class="video-text">
+          <h2>2024년 송년 행사</h2>
+          <p>다나눔그룹의 다사다난했던 2024년을 보내며 나눔과 배려 그리고 함께 만들어가는 건강한 사회를 위하여 다나눔의 가치를 공유하는 시간을 가진 날 이였습니다.</p>
+        </div>
+        <div class="video-frame">
+          <div class="video-container">
+            <iframe
+                    src="https://www.youtube.com/embed/k0mHo-MOoBA"
+                    title="2024년 송년 행사"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                    playsinline
+                    referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 영상 6 -->
+    <div class="video-item">
+      <div class="video-content">
+        <div class="video-text">
+          <h2>차소 원장님 인터뷰</h2>
+          <p>의료봉사 및 에너지의학을 연구하시고 연간 10,000명 이상의 건강개선에 도움을 주시는 차소 원장님의 다나눔리커버리웨어에 대한 의견을 말씀해주십니다.</p>
+        </div>
+        <div class="video-frame">
+          <div class="video-container">
+            <iframe
+                    src="https://www.youtube.com/embed/GhS38xA3ADA"
+                    title="차소 원장님 인터뷰"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                    playsinline
+                    referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

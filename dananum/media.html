@@ -1,0 +1,97 @@
+<style>
+  /* 섹션 스코프 */
+  #med-device {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 20px;
+    font-family: Georgia, "Times New Roman", serif; /* 기본 serif */
+    color: #010101;
+  }
+
+  /* 가로 정렬 */
+  #med-device .row-flex{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 24px;
+  }
+
+  /* 좌우 컬럼 */
+  #med-device .txt-col{
+    flex: 1 1 480px;
+    order: 1;
+    min-width: 320px;
+  }
+  #med-device .img-col{
+    flex: 1 1 520px;
+    order: 2;
+    min-width: 320px;
+  }
+
+  /* 타이포 */
+  #med-device .title-big{
+    font-family: Georgia, "Times New Roman", serif;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    font-size: clamp(36px, 6vw, 72px);
+    margin: 0 0 20px;
+  }
+  #med-device .desc{
+    color: #555; /* serif에 맞춰 조금 진하게 */
+    font-size: 15px;
+    margin-top: 28px;
+  }
+  #med-device .more{
+    margin-top: 22px;
+    color: #333;
+    text-decoration: underline;
+    font-size: 14px;
+    font-family: Georgia, "Times New Roman", serif;
+  }
+
+  /* 이미지 */
+  #med-device .image-wrap{
+    max-width: 700px;
+    margin-left: auto;
+  }
+  #med-device .image-wrap img{
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* 모바일 */
+  @media (max-width: 768px){
+    #med-device { padding: 28px 16px; }
+    #med-device .row-flex{ gap: 16px; }
+    #med-device .image-wrap{ margin: 0 auto; max-width: 100%; }
+  }
+</style>
+
+<div id="med-device">
+  <div class="row-flex">
+    <!-- 왼쪽: 텍스트 -->
+    <div class="txt-col">
+      <h2 class="title-big">
+        식약청허가<br>
+        의료기기 1등급
+      </h2>
+
+      <p class="desc">
+        다나눔 제품의 독보적인 우수성을 입증하기 위한 연구와 노력으로 식약청 허가를 받았습니다.
+        의료기기 등록제품은 홈페이지 다나눔소개글 하단에 목록과 허가증이 등록되어 있습니다.
+      </p>
+
+      <a class="more" href="#">자세히보기</a>
+    </div>
+
+    <!-- 오른쪽: 이미지 -->
+    <div class="img-col">
+      <div class="image-wrap">
+        <img
+                src="https://lh3.googleusercontent.com/upWO0WcnxwihwYqbbTpozU08P-GlEPz8oXGJg2-uwTKR4MLYOGndroD4OypZnwuua4vyzSbzu8IjBYcaKpQb3SDBfuBGoOueukICwTAqfFaJc3IY1hgdrQ=w1600"
+                alt="의료기기 제조업 허가증">
+      </div>
+    </div>
+  </div>
+</div>

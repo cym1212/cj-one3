@@ -1,78 +1,155 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Test</title>
-    
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Tailwind Config -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'accent': '#41c5af',
-                        'description': '#6b7280',
-                        'border': '#e5e7eb'
-                    }
-                }
-            }
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>다나눔 영상 섹션</title>
+    <style>
+        /* 기본 레이아웃 */
+        :root { --gap: 24px; --text-color:#222; --muted:#999; }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0; padding: 40px 20px; color: var(--text-color);
+            font-family: Roboto, "Nanum Gothic", "Nanum Square", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+            line-height: 1.6; background:#fff;
         }
-    </script>
+        .section { max-width: 1100px; margin: 0 auto var(--gap) auto; }
+        .grid {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr; /* 텍스트가 약간 더 넓게 */
+            gap: var(--gap);
+            align-items: start;
+        }
+        @media (max-width: 900px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+
+        /* 텍스트 */
+        .lead { margin: 0 0 6px 0; }
+        .muted { color: var(--muted); font-size: 13px; }
+
+        /* 비디오 카드 */
+        .video-card { position: relative; width: 100%; border-radius: 12px; overflow: hidden; background:#f3f3f3; }
+        .video-thumb {
+            width: 100%;
+            aspect-ratio: 1 / 0.55;     /* 스샷과 동일한 비율 */
+            background-size: cover;
+            background-position: center;
+            display:block;
+        }
+        .playbtn {
+            position: absolute; inset: 0;
+            display: grid; place-items: center;
+            pointer-events:none;
+        }
+        .playbtn svg circle { fill: rgba(0,0,0,.25); }
+        .playbtn svg path { fill: #fff; }
+        .video-link { display:block; position: relative; }
+        .video-link:hover .video-thumb { filter: brightness(0.95); }
+
+        /* 푸터 */
+        footer { border-top:1px solid #eee; margin-top: 48px; padding-top: 24px; font-size:14px; }
+        footer a { color: inherit; text-decoration: underline; }
+    </style>
 </head>
-<body class="bg-gray-50 p-8">
-    <h1>간단한 테스트</h1>
-    
-    <div id="test-component" style="border: 1px solid red; min-height: 300px; background: white; padding: 20px;">
-        컴포넌트가 여기에 렌더링 됩니다...
+<body>
+
+<!-- 1 -->
+<section class="section grid">
+    <div>
+        <p class="lead">입고만 있어도 건강해지는 리커버리웨어 봉당tv에서 기업탐방으로 제작된 영상입니다.</p>
+        <p class="lead">영상보시고 다나눔이 어떤 회사인지 확인해보세요</p>
     </div>
-    
-    <div id="logs" style="margin-top: 20px; background: #f0f0f0; padding: 10px;">
-        <h3>로그:</h3>
-        <div id="log-content"></div>
+    <div class="video-card">
+        <a class="video-link" href="https://youtu.be/oUCJ5JQ7nxA?si=lmJzF-Wy2abliywf" target="_blank" rel="noopener">
+            <span class="video-thumb" style="background-image:url('https://img.youtube.com/vi/oUCJ5JQ7nxA/0.jpg')"></span>
+            <span class="playbtn" aria-hidden="true">
+          <svg viewBox="0 0 58 58" width="64" height="64">
+            <circle cx="29" cy="29" r="29"></circle>
+            <path d="M41.25 29.43l-17.5 10.13c-.33.2-.75-.05-.75-.44V18.87c0-.39.42-.63.75-.43l17.5 10.13c.34.2.34.68 0 .86z"></path>
+          </svg>
+        </span>
+        </a>
     </div>
+</section>
 
-    <!-- React -->
-    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+<!-- 2 -->
+<section class="section grid">
+    <div>
+        <p class="muted">다나눔 리커버리웨어를 입고 건강해진 모습으로 인텨뷰하는 이봉주 선수 입니다.</p>
+        <p>국민 마라토너 이봉주 선수를 응원합니다.</p>
+    </div>
+    <div class="video-card">
+        <a class="video-link" href="https://youtu.be/O9CIEeWQHN8" target="_blank" rel="noopener">
+            <span class="video-thumb" style="background-image:url('https://img.youtube.com/vi/O9CIEeWQHN8/0.jpg')"></span>
+            <span class="playbtn" aria-hidden="true">
+          <svg viewBox="0 0 58 58" width="64" height="64">
+            <circle cx="29" cy="29" r="29"></circle>
+            <path d="M41.25 29.43l-17.5 10.13c-.33.2-.75-.05-.75-.44V18.87c0-.39.42-.63.75-.43l17.5 10.13c.34.2.34.68 0 .86z"></path>
+          </svg>
+        </span>
+        </a>
+    </div>
+</section>
 
-    <!-- Component -->
-    <script src="./dist/poj2-myzone-sidebar.js"></script>
+<!-- 3 -->
+<section class="section grid">
+    <div>
+        <p class="muted">25년 5월3일 영화배우겸 탤런트 전원주, 서우림, 김경애 님이 다나눔그룹의 “세계홍보대사”에 위촉되시고 유쾌한 시간을 보내셨습니다.</p>
+    </div>
+    <div class="video-card">
+        <a class="video-link" href="https://youtu.be/GMclAnoe-Qc" target="_blank" rel="noopener">
+            <span class="video-thumb" style="background-image:url('https://img.youtube.com/vi/GMclAnoe-Qc/0.jpg')"></span>
+            <span class="playbtn" aria-hidden="true">
+          <svg viewBox="0 0 58 58" width="64" height="64">
+            <circle cx="29" cy="29" r="29"></circle>
+            <path d="M41.25 29.43l-17.5 10.13c-.33.2-.75-.05-.75-.44V18.87c0-.39.42-.63.75-.43l17.5 10.13c.34.2.34.68 0 .86z"></path>
+          </svg>
+        </span>
+        </a>
+    </div>
+</section>
 
-    <script>
-        function log(message) {
-            const logDiv = document.getElementById('log-content');
-            const entry = document.createElement('div');
-            entry.textContent = `${new Date().toLocaleTimeString()}: ${message}`;
-            logDiv.appendChild(entry);
-        }
-        
-        log('페이지 로드 시작');
-        log('React 로드: ' + (typeof React !== 'undefined' ? 'OK' : 'FAIL'));
-        log('ReactDOM 로드: ' + (typeof ReactDOM !== 'undefined' ? 'OK' : 'FAIL'));
-        log('Component 로드: ' + (typeof Poj2MyzoneSidebar !== 'undefined' ? 'OK' : 'FAIL'));
-        
-        if (typeof Poj2MyzoneSidebar !== 'undefined') {
-            try {
-                log('컴포넌트 렌더링 시도...');
-                ReactDOM.render(
-                    React.createElement(Poj2MyzoneSidebar, {
-                        onLinkClick: (href, label) => {
-                            log('클릭: ' + label + ' -> ' + href);
-                        }
-                    }),
-                    document.getElementById('test-component')
-                );
-                log('렌더링 성공!');
-            } catch (error) {
-                log('렌더링 에러: ' + error.message);
-            }
-        } else {
-            log('컴포넌트를 찾을 수 없습니다');
-        }
-    </script>
+<!-- 4 -->
+<section class="section grid">
+    <div>
+        <p class="muted">리커버리웨어를 연구·개발·제조·생산·유통 하는 다나눔그룹의 영상 입니다.</p>
+    </div>
+    <div class="video-card">
+        <a class="video-link" href="https://youtu.be/SA-VJ6eIWts" target="_blank" rel="noopener">
+            <span class="video-thumb" style="background-image:url('https://img.youtube.com/vi/SA-VJ6eIWts/0.jpg')"></span>
+            <span class="playbtn" aria-hidden="true">
+          <svg viewBox="0 0 58 58" width="64" height="64">
+            <circle cx="29" cy="29" r="29"></circle>
+            <path d="M41.25 29.43l-17.5 10.13c-.33.2-.75-.05-.75-.44V18.87c0-.39.42-.63.75-.43l17.5 10.13c.34.2.34.68 0 .86z"></path>
+          </svg>
+        </span>
+        </a>
+    </div>
+</section>
+
+<!-- 5 -->
+<section class="section grid">
+    <div>
+        <p class="muted">다나눔그룹의 다사다난했던 2024년을 보내며 나눔과 배려 그리고 함께 만들어가는 건강한 사회를 위하여 다나눔의 가치를 공유하는 시간을 가진 날 이였습니다.</p>
+    </div>
+    <div class="video-card">
+        <a class="video-link" href="https://youtu.be/k0mHo-MOoBA" target="_blank" rel="noopener">
+            <span class="video-thumb" style="background-image:url('https://img.youtube.com/vi/k0mHo-MOoBA/0.jpg')"></span>
+            <span class="playbtn" aria-hidden="true">
+          <svg viewBox="0 0 58 58" width="64" height="64">
+            <circle cx="29" cy="29" r="29"></circle>
+            <path d="M41.25 29.43l-17.5 10.13c-.33.2-.75-.05-.75-.44V18.87c0-.39.42-.63.75-.43l17.5 10.13c.34.2.34.68 0 .86z"></path>
+          </svg>
+        </span>
+        </a>
+    </div>
+</section>
+
+<footer class="section">
+    <div>상호: 다나눔패션주식회사 | 대표: 김철근 | 개인정보관리책임자: 최양순 | 전화: 1588-4962 | 이메일: wbepd27@naver.com</div>
+    <div>주소: 경기도 남양주시 수석동216 | 사업자등록번호: 1608801162 | 통신판매: <a href="http://www.ftc.go.kr/bizCommPop.do?wrkr_no=1608801162" target="_blank" rel="noopener">제2016-서울중구-1666호</a></div>
+    <div>호스팅제공자: (주)크리에이터링크 | <a href="/siteinfo/terms" target="_blank">이용약관</a> | <a href="/siteinfo/privacy" target="_blank">개인정보 처리방침</a></div>
+</footer>
 </body>
 </html>

@@ -1,0 +1,260 @@
+<!--<style>-->
+<!--  .custom-container {-->
+<!--    width: 100%;-->
+<!--    padding: 40px 0;-->
+<!--    background-image: url('https://lh3.googleusercontent.com/DHTo3kO3pFrYD6tlhAoKqC0GIHPpA7T4gwtfYFD6Z4JlwTrJhnXzelLLZDgqSS-XHdCX_SakmXwxmpohtN-Cq_X-IFqZ-IX6hjfr50g57qiE5O_hWnu6Qg=s0');-->
+<!--    background-size: cover;-->
+<!--    background-position: center;-->
+<!--    background-repeat: no-repeat;-->
+<!--    min-height: 1000px;-->
+<!--    display: flex;-->
+<!--    align-items: center;-->
+<!--    justify-content: center;-->
+<!--  }-->
+
+<!--  .custom-content-wrapper {-->
+<!--    display: flex;-->
+<!--    gap: 30px;-->
+<!--    align-items: center;-->
+<!--    width: 100%;-->
+<!--    max-width: 1400px;-->
+<!--    margin: 0 auto;-->
+<!--    padding: 0 20px;-->
+<!--  }-->
+
+<!--  .custom-images-section {-->
+<!--    display: flex;-->
+<!--    gap: 30px;-->
+<!--    flex: 3;-->
+<!--  }-->
+
+<!--  .custom-image-box {-->
+<!--    flex: 1;-->
+<!--    height: 600px;-->
+<!--  }-->
+
+<!--  .custom-image-box img {-->
+<!--    width: 100%;-->
+<!--    height: 100%;-->
+<!--    object-fit: cover;-->
+<!--    display: block;-->
+<!--    border-radius: 12px;-->
+<!--    box-shadow: 0 10px 30px rgba(0,0,0,0.3);-->
+<!--  }-->
+
+<!--  .custom-text-section {-->
+<!--    flex: 1.2;-->
+<!--    padding: 50px;-->
+<!--    background: rgba(255, 255, 255, 0.95);-->
+<!--    border-radius: 12px;-->
+<!--    box-shadow: 0 10px 30px rgba(0,0,0,0.2);-->
+<!--  }-->
+
+<!--  .custom-text-section h3 {-->
+<!--    font-size: 18px;-->
+<!--    color: #666;-->
+<!--    margin-bottom: 25px;-->
+<!--    font-weight: normal;-->
+<!--    white-space: nowrap;-->
+<!--  }-->
+
+<!--  .custom-text-section h1 {-->
+<!--    font-size: 42px;-->
+<!--    color: #333;-->
+<!--    margin-bottom: 25px;-->
+<!--    font-weight: 700;-->
+<!--    white-space: nowrap;-->
+<!--  }-->
+
+<!--  .custom-text-section p {-->
+<!--    font-size: 20px;-->
+<!--    color: #666;-->
+<!--    line-height: 1.6;-->
+<!--    white-space: nowrap;-->
+<!--  }-->
+
+<!--  @media (max-width: 1024px) {-->
+<!--    .custom-content-wrapper {-->
+<!--      flex-direction: column;-->
+<!--      width: 95%;-->
+<!--    }-->
+
+<!--    .custom-images-section {-->
+<!--      width: 100%;-->
+<!--    }-->
+
+<!--    .custom-image-box {-->
+<!--      height: 400px;-->
+<!--    }-->
+<!--  }-->
+
+<!--  @media (max-width: 768px) {-->
+<!--    .custom-images-section {-->
+<!--      flex-direction: column;-->
+<!--    }-->
+
+<!--    .custom-image-box {-->
+<!--      height: 300px;-->
+<!--    }-->
+
+<!--    .custom-text-section {-->
+<!--      padding: 30px;-->
+<!--      text-align: center;-->
+<!--    }-->
+
+<!--    .custom-text-section h1 {-->
+<!--      font-size: 32px;-->
+<!--    }-->
+
+<!--    .custom-text-section h3,-->
+<!--    .custom-text-section p {-->
+<!--      white-space: normal;-->
+<!--    }-->
+<!--  }-->
+<!--</style>-->
+
+<!--<div class="custom-container">-->
+<!--  <div class="custom-content-wrapper">-->
+<!--    <div class="custom-images-section">-->
+<!--      <div class="custom-image-box">-->
+<!--        <img src="https://lh3.googleusercontent.com/p7l6EaoejxU9Z2GFBpxOHlPanfoE_M81lGudAzJW9k_Qf3bct6t39eD3_ozdN6RfmpHlPk5o3uIMqSGEYCtF4paboK872Z14maSfflz0n1CSMMhXUEXLNg=s0" alt="보관방법1">-->
+<!--      </div>-->
+<!--      <div class="custom-image-box">-->
+<!--        <img src="https://lh3.googleusercontent.com/EFDrQrnVAnLqsmz2_TBy8sOE49gdqgs9TOYZX6NSNPsSjGRNIdeVwzjjpHMOYYqZ-Na0vIuNDvlp5emHoGeJWiXvazSAc2ZmTpCDunYMVzI2xm1hWcGRLw=s0" alt="보관방법2">-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="custom-text-section">-->
+<!--      <h3>올바른 관리방법 안내</h3>-->
+<!--      <h1>다나눔리커버리웨어</h1>-->
+<!--      <p>잘못된 관리방법은 기능저하의 요인이 됩니다.</p>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>다나눔 보관/관리 안내</title>
+
+  <script>
+    (function(){
+      // 1) a-z 5글자 랜덤 프리픽스
+      function randPrefix(n){var s='',c='abcdefghijklmnopqrstuvwxyz';for(var i=0;i<n;i++) s+=c[Math.floor(Math.random()*c.length)];return s;}
+      var px = randPrefix(5); // 예: 'abxyz'
+
+      // 2) DOM 로드 시 루트에 프리픽스 스코프 클래스 부여
+      document.addEventListener('DOMContentLoaded', function(){
+        var root = document.getElementById('wc-store-root');
+        if (root) root.classList.add(px + '-scope');
+      });
+
+      // 3) 프리픽스 스코프된 CSS 주입
+      var css = `
+/* ===== 스코프 전역 ===== */
+#wc-store-root.${px}-scope * { box-sizing:border-box; }
+#wc-store-root.${px}-scope img { max-width:100%; height:auto; display:block; }
+
+/* 컨테이너(배경 이미지 + 센터링) */
+#wc-store-root.${px}-scope .custom-container {
+  width:100%;
+  padding:40px 0;
+  background-image:url('https://lh3.googleusercontent.com/DHTo3kO3pFrYD6tlhAoKqC0GIHPpA7T4gwtfYFD6Z4JlwTrJhnXzelLLZDgqSS-XHdCX_SakmXwxmpohtN-Cq_X-IFqZ-IX6hjfr50g57qiE5O_hWnu6Qg=s0');
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  min-height:1000px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Noto Sans KR','Roboto',sans-serif;
+}
+
+/* 내부 래퍼 */
+#wc-store-root.${px}-scope .custom-content-wrapper{
+  display:flex; gap:30px; align-items:center;
+  width:100%; max-width:1400px; margin:0 auto; padding:0 20px;
+}
+
+/* 이미지 영역 (좌측 2칸) */
+#wc-store-root.${px}-scope .custom-images-section{
+  display:flex; gap:30px; flex:3; width:100%;
+}
+#wc-store-root.${px}-scope .custom-image-box{
+  flex:1; height:600px; position:relative;
+}
+#wc-store-root.${px}-scope .custom-image-box img{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* 텍스트 카드 (우측) */
+#wc-store-root.${px}-scope .custom-text-section{
+  flex:1.2;
+  padding:50px;
+  background:rgba(255,255,255,0.95);
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+#wc-store-root.${px}-scope .custom-text-section h3{
+  font-size:18px; color:#666; margin-bottom:25px; font-weight:400; white-space:nowrap;
+}
+#wc-store-root.${px}-scope .custom-text-section h1{
+  font-size:42px; color:#333; margin-bottom:25px; font-weight:700; white-space:nowrap;
+}
+#wc-store-root.${px}-scope .custom-text-section p{
+  font-size:20px; color:#666; line-height:1.6; white-space:nowrap;
+}
+
+/* 태블릿 이하 */
+@media (max-width:1024px){
+  #wc-store-root.${px}-scope .custom-content-wrapper{ flex-direction:column; width:95%; }
+  #wc-store-root.${px}-scope .custom-images-section{ width:100%; }
+  #wc-store-root.${px}-scope .custom-image-box{ height:400px; }
+}
+
+/* 모바일 */
+@media (max-width:768px){
+  #wc-store-root.${px}-scope .custom-images-section{ flex-direction:column; }
+  #wc-store-root.${px}-scope .custom-image-box{ height:300px; }
+
+  #wc-store-root.${px}-scope .custom-text-section{ padding:30px; text-align:center; }
+  #wc-store-root.${px}-scope .custom-text-section h1{ font-size:32px; }
+  #wc-store-root.${px}-scope .custom-text-section h3,
+  #wc-store-root.${px}-scope .custom-text-section p{ white-space:normal; }
+}
+      `;
+      var style = document.createElement('style');
+      style.type = 'text/css';
+      style.appendChild(document.createTextNode(css));
+      document.head.appendChild(style);
+    })();
+  </script>
+</head>
+<body>
+
+<!-- 루트: 이 아래만 스코프 적용 -->
+<div id="wc-store-root">
+  <div class="custom-container">
+    <div class="custom-content-wrapper">
+      <div class="custom-images-section">
+        <div class="custom-image-box">
+          <img src="https://lh3.googleusercontent.com/p7l6EaoejxU9Z2GFBpxOHlPanfoE_M81lGudAzJW9k_Qf3bct6t39eD3_ozdN6RfmpHlPk5o3uIMqSGEYCtF4paboK872Z14maSfflz0n1CSMMhXUEXLNg=s0" alt="보관방법1">
+        </div>
+        <div class="custom-image-box">
+          <img src="https://lh3.googleusercontent.com/EFDrQrnVAnLqsmz2_TBy8sOE49gdqgs9TOYZX6NSNPsSjGRNIdeVwzjjpHMOYYqZ-Na0vIuNDvlp5emHoGeJWiXvazSAc2ZmTpCDunYMVzI2xm1hWcGRLw=s0" alt="보관방법2">
+        </div>
+      </div>
+      <div class="custom-text-section">
+        <h3>올바른 관리방법 안내</h3>
+        <h1>다나눔리커버리웨어</h1>
+        <p>잘못된 관리방법은 기능저하의 요인이 됩니다.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

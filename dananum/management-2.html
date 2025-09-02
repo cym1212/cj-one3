@@ -1,0 +1,178 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="ko">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--  <title>비디오 섹션</title>-->
+<!--  <style>-->
+<!--    * {-->
+<!--      margin: 0;-->
+<!--      padding: 0;-->
+<!--      box-sizing: border-box;-->
+<!--    }-->
+
+<!--    .video-container {-->
+<!--      width: 100%;-->
+<!--      max-width: 1400px;-->
+<!--      margin: 0 auto;-->
+<!--      padding: 40px 20px;-->
+<!--    }-->
+
+<!--    .video-wrapper {-->
+<!--      display: flex;-->
+<!--      gap: 40px;-->
+<!--      align-items: center;-->
+<!--    }-->
+
+<!--    .video-section {-->
+<!--      flex: 1;-->
+<!--      position: relative;-->
+<!--      padding-bottom: 35%; /* 높이 줄임 */-->
+<!--      height: 0;-->
+<!--      overflow: hidden;-->
+<!--    }-->
+
+<!--    .video-section iframe {-->
+<!--      position: absolute;-->
+<!--      top: 0;-->
+<!--      left: 0;-->
+<!--      width: 100%;-->
+<!--      height: 100%;-->
+<!--      border: none;-->
+<!--    }-->
+
+<!--    .text-section {-->
+<!--      flex: 1;-->
+<!--      padding: 20px;-->
+<!--    }-->
+
+<!--    .text-section p {-->
+<!--      color: #999;-->
+<!--      font-size: 13px;-->
+<!--      line-height: 1.8;-->
+<!--      margin-bottom: 10px;-->
+<!--      font-family: 'Noto Sans KR', sans-serif;-->
+<!--    }-->
+
+<!--    @media (max-width: 768px) {-->
+<!--      .video-container {-->
+<!--        padding: 20px 15px;-->
+<!--      }-->
+
+<!--      .video-wrapper {-->
+<!--        flex-direction: column;-->
+<!--        gap: 20px;-->
+<!--      }-->
+
+<!--      .video-section {-->
+<!--        width: 100%;-->
+<!--        padding-bottom: 56.25%; /* 모바일에서는 16:9 비율 유지 */-->
+<!--      }-->
+
+<!--      .text-section {-->
+<!--        padding: 10px 0;-->
+<!--      }-->
+
+<!--      .text-section p {-->
+<!--        font-size: 12px;-->
+<!--        line-height: 1.7;-->
+<!--      }-->
+<!--    }-->
+<!--  </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="video-container">-->
+<!--  <div class="video-wrapper">-->
+<!--    <div class="video-section">-->
+<!--      <iframe src="https://www.youtube.com/embed/43iHg7VFTPQ?playsinline=1"-->
+<!--              frameborder="0"-->
+<!--              allowfullscreen="true"-->
+<!--              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"-->
+<!--              loading="lazy">-->
+<!--      </iframe>-->
+<!--    </div>-->
+<!--    <div class="text-section">-->
+<!--      <p>다나눔 리커버리웨어의 제작은 일반적인 형태의 원사제작>원단제작>재단>봉제>완성 의 방식이 아닙니다.</p>-->
+<!--      <p>제조과정을 최소화하여 기능을 최대한 활용해야 하므로 원사>완성 의 형식을 사용합니다.</p>-->
+<!--      <p>동영상과 같이 올풀림 현상이 디자인에 따라 발생할 수 있으므로 영상을 끝까지 시청하시어 대처하시면 됩니다.</p>-->
+<!--      <p>감사합니다.</p>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>비디오 섹션</title>
+  <script>
+    (function(){
+      // a-z 5글자 랜덤 프리픽스
+      function randPrefix(n){var s='',c='abcdefghijklmnopqrstuvwxyz';for(var i=0;i<n;i++)s+=c[Math.floor(Math.random()*c.length)];return s;}
+      var px = randPrefix(5);
+
+      document.addEventListener('DOMContentLoaded', function(){
+        var root = document.getElementById('wc-video-root');
+        if(root) root.classList.add(px + '-scope');
+      });
+
+      var css = `
+#wc-video-root.${px}-scope *{box-sizing:border-box;margin:0;padding:0;}
+#wc-video-root.${px}-scope{font-family:'Noto Sans KR',sans-serif;}
+#wc-video-root.${px}-scope .video-container{
+  width:100%;max-width:1400px;margin:0 auto;padding:40px 20px;
+}
+#wc-video-root.${px}-scope .video-wrapper{
+  display:flex;gap:40px;align-items:center;
+}
+#wc-video-root.${px}-scope .video-section{
+  flex:1;position:relative;padding-bottom:35%;height:0;overflow:hidden;
+}
+#wc-video-root.${px}-scope .video-section iframe{
+  position:absolute;top:0;left:0;width:100%;height:100%;border:0;
+}
+#wc-video-root.${px}-scope .text-section{flex:1;padding:20px;}
+#wc-video-root.${px}-scope .text-section p{
+  color:#999;font-size:13px;line-height:1.8;margin-bottom:10px;
+}
+
+/* 모바일 */
+@media(max-width:768px){
+  #wc-video-root.${px}-scope .video-container{padding:20px 15px;}
+  #wc-video-root.${px}-scope .video-wrapper{flex-direction:column;gap:20px;}
+  #wc-video-root.${px}-scope .video-section{width:100%;padding-bottom:56.25%;}
+  #wc-video-root.${px}-scope .text-section{padding:10px 0;}
+  #wc-video-root.${px}-scope .text-section p{font-size:12px;line-height:1.7;}
+}
+      `;
+      var style=document.createElement('style');
+      style.type='text/css';style.appendChild(document.createTextNode(css));
+      document.head.appendChild(style);
+    })();
+  </script>
+</head>
+<body>
+<div id="wc-video-root">
+  <div class="video-container">
+    <div class="video-wrapper">
+      <div class="video-section">
+        <iframe src="https://www.youtube.com/embed/43iHg7VFTPQ?playsinline=1"
+                allowfullscreen
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                loading="lazy"></iframe>
+      </div>
+      <div class="text-section">
+        <p>다나눔 리커버리웨어의 제작은 일반적인 형태의 원사제작>원단제작>재단>봉제>완성 의 방식이 아닙니다.</p>
+        <p>제조과정을 최소화하여 기능을 최대한 활용해야 하므로 원사>완성 의 형식을 사용합니다.</p>
+        <p>동영상과 같이 올풀림 현상이 디자인에 따라 발생할 수 있으므로 영상을 끝까지 시청하시어 대처하시면 됩니다.</p>
+        <p>감사합니다.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
